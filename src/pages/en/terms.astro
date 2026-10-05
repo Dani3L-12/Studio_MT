@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import GlassCard from '../../components/GlassCard.astro';
+import { siteConfig } from '../../config/site.config';
+---
+
+<Layout lang="en" title="Terms and Conditions" description="Service conditions for Studio MG web projects.">
+  <PageHeader title="Terms & Conditions" subtitle={`Last updated: ${siteConfig.lastUpdated}`} />
+
+  <Section>
+    {import.meta.env.DEV && (
+      <div class="max-w-2xl mx-auto mb-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono text-center">
+        ⚠️ DRAFT: review with a professional before publishing.
+      </div>
+    )}
+
+    <div class="max-w-2xl mx-auto space-y-8">
+      <GlassCard class="p-8 space-y-6 text-sm leading-relaxed opacity-90">
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">1. Scope of Services</h2>
+          <p>
+            Studio MG provides web design and development services for local businesses in Cusco (digital menus, landing pages, catalogs, and stores with WhatsApp).
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">2. Pricing and Payments</h2>
+          <p>
+            Published prices are referential and confirmed in a formal quote. A 50% advance is required to start work and the remaining 50% upon delivery before publishing.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">3. Timelines and Content</h2>
+          <p>
+            Estimated delivery timelines (3 to 10 days) begin once the client provides all texts, photographs, and logo. Revision rounds are specified in each package.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">4. Intellectual Property & Domain</h2>
+          <p>
+            The client retains all rights to their brand, logo, and provided content. The web domain and website are registered in the client's absolute name and ownership.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">5. Limitations</h2>
+          <p>
+            Our standard packages do not include automated online payment gateways; orders are managed via direct WhatsApp messages. The monthly support plan is optional.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">6. Contact</h2>
+          <p>
+            For any questions regarding these terms, write to us at <a href={`mailto:${siteConfig.email}`} class="text-[#39FF14] underline">{siteConfig.email}</a> or via WhatsApp.
+          </p>
+        </div>
+      </GlassCard>
+    </div>
+  </Section>
+</Layout>

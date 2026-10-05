@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import GlassCard from '../components/GlassCard.astro';
+import { siteConfig } from '../config/site.config';
+---
+
+<Layout lang="es" title="Términos y Condiciones" description="Condiciones de servicio para los proyectos web de Studio MG.">
+  <PageHeader title="Términos y Condiciones" subtitle={`Última actualización: ${siteConfig.lastUpdated}`} />
+
+  <Section>
+    {import.meta.env.DEV && (
+      <div class="max-w-2xl mx-auto mb-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono text-center">
+        ⚠️ BORRADOR: revisar con un profesional antes de publicar.
+      </div>
+    )}
+
+    <div class="max-w-2xl mx-auto space-y-8">
+      <GlassCard class="p-8 space-y-6 text-sm leading-relaxed opacity-90">
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">1. Alcance de los Servicios</h2>
+          <p>
+            Studio MG ofrece servicios de diseño y desarrollo web para negocios locales en Cusco (cartas digitales, landing pages, catálogos y tiendas con WhatsApp).
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">2. Precios y Pagos</h2>
+          <p>
+            Los precios publicados son referenciales y se confirman en la cotización formal. Se requiere un adelanto del 50% para iniciar el trabajo y el 50% restante contra entrega antes de publicar.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">3. Plazos y Contenidos</h2>
+          <p>
+            Los plazos de entrega estimados (3 a 10 días) comienzan una vez que el cliente entrega la totalidad de textos, fotografías y logotipo. Las rondas de modificaciones están especificadas en cada paquete.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">4. Propiedad Intelectual y Dominio</h2>
+          <p>
+            El cliente conserva todos los derechos sobre su marca, logotipo y contenidos aportados. El dominio web y el sitio se registran a nombre y propiedad absoluta del cliente.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">5. Limitaciones</h2>
+          <p>
+            Nuestros paquetes estándar no incluyen pasarelas de pago automáticas en línea; los pedidos se gestionan mediante mensajes directos a WhatsApp. El plan de soporte mensual es opcional.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">6. Contacto</h2>
+          <p>
+            Para cualquier consulta sobre estos términos, escríbenos a <a href={`mailto:${siteConfig.email}`} class="text-[#39FF14] underline">{siteConfig.email}</a> o por WhatsApp.
+          </p>
+        </div>
+      </GlassCard>
+    </div>
+  </Section>
+</Layout>

@@ -1,0 +1,25 @@
+---
+import GlassCard from './GlassCard.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+}
+
+const { title, description, icon } = Astro.props;
+---
+
+<GlassCard class="flex flex-col items-start text-left hover:border-[#00E5C3] transition-all duration-300">
+  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#39FF14]/20 to-[#00E5C3]/20 flex items-center justify-center text-[#00E5C3] mb-4">
+    {icon ? (
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={icon}></svg>
+    ) : (
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    )}
+  </div>
+  <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{title}</h3>
+  <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{description}</p>
+</GlassCard>

@@ -1,0 +1,17 @@
+---
+import { siteConfig } from '../config/site.config';
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+<a href="#" class={`flex items-center gap-3 group ${className}`}>
+  <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#39FF14] to-[#00E5C3] p-[1px] flex items-center justify-center shadow-lg shadow-[#39FF14]/10 group-hover:shadow-[#39FF14]/30 transition-all">
+    <div class="w-full h-full bg-[#070B0A] rounded-[11px] flex items-center justify-center font-bold text-lg text-white font-['Space_Grotesk']">
+      {siteConfig.brandName.split(' ')[0].charAt(0)}{siteConfig.brandName.split(' ')[1]?.charAt(0) || ''}
+    </div>
+  </div>
+  <span class="font-extrabold tracking-wider text-xl font-['Space_Grotesk']">
+    {siteConfig.brandName}
+  </span>
+</a>

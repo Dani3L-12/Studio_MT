@@ -1,0 +1,146 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import BenefitsBar from '../../components/BenefitsBar.astro';
+import Section from '../../components/Section.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import DemoCard from '../../components/DemoCard.astro';
+import Button from '../../components/Button.astro';
+import GlassCard from '../../components/GlassCard.astro';
+import ProcessSection from '../../components/ProcessSection.astro';
+import FaqSection from '../../components/FaqSection.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { packagesData } from '../../data/packages';
+import { demosData } from '../../data/demos';
+import { faqData } from '../../data/faq';
+import { siteConfig } from '../../config/site.config';
+import { en } from '../../i18n/en';
+
+const serviceIcons = [
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />`,
+  `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />`
+];
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+
+const getTranslation = (key: string) => {
+  const keys = key.split('.');
+  let obj: any = en;
+  for (const k of keys) {
+    obj = obj?.[k];
+  }
+  return obj || key;
+};
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": siteConfig.brandName,
+  "url": siteConfig.siteUrl,
+  "logo": `${siteConfig.siteUrl}/favicon.svg`,
+  "email": siteConfig.email,
+  "telephone": `+${siteConfig.whatsappNumber}`,
+  "areaServed": "Cusco, Perú",
+  "sameAs": [
+    siteConfig.socialLinks.facebook,
+    siteConfig.socialLinks.instagram,
+    siteConfig.socialLinks.tiktok
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqData.map(item => ({
+    "@type": "Question",
+    "name": getTranslation(`${item.qKey}.q`),
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": getTranslation(`${item.qKey}.a`)
+    }
+  }))
+};
+---
+
+<Layout lang="en" title="Web Design in Cusco" description="Modern, fast, mobile-friendly websites for businesses in Cusco.">
+  <JsonLd schema={[orgSchema, faqSchema]} />
+
+  <Hero lang="en" />
+  <BenefitsBar lang="en" />
+
+  <!-- SERVICES SECTION (summary) -->
+  <Section title={en.homeServices.title} subtitle={en.homeServices.subtitle}>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <ServiceCard title={en.homeServices.card1Title} description={en.homeServices.card1Desc} icon={serviceIcons[0]} />
+      <ServiceCard title={en.homeServices.card2Title} description={en.homeServices.card2Desc} icon={serviceIcons[1]} />
+      <ServiceCard title={en.homeServices.card3Title} description={en.homeServices.card3Desc} icon={serviceIcons[2]} />
+      <ServiceCard title={en.homeServices.card4Title} description={en.homeServices.card4Desc} icon={serviceIcons[3]} />
+    </div>
+    <div class="text-center">
+      <Button variant="secondary" href="/en/services">{en.homeServices.cta}</Button>
+    </div>
+  </Section>
+
+  <!-- FEATURED DEMOS SECTION (summary) -->
+  <Section title={en.homeDemos.title} subtitle={en.homeDemos.subtitle}>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      {demosData.map((demo) => (
+        <DemoCard demo={demo} lang="en" />
+      ))}
+    </div>
+    <div class="text-center">
+      <Button variant="secondary" href="/en/demos">{en.homeDemos.cta}</Button>
+    </div>
+  </Section>
+
+  <!-- PACKAGES SECTION (summary) -->
+  <Section title={en.homePackages.title} subtitle={en.homePackages.subtitle}>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-8">
+      {packagesData.map((pkg) => {
+        const name = getTranslation(`${pkg.nameKey}`);
+        const desc = getTranslation(`${pkg.descKey}`);
+        const features = pkg.featuresKey.map(f => getTranslation(f));
+
+        return (
+          <GlassCard class={`flex flex-col justify-between h-full ${pkg.popular ? 'border-[#39FF14] bg-gradient-to-b from-[#39FF14]/15 to-[var(--card-dark-bg)] shadow-[0_0_30px_rgba(57,255,20,0.15)]' : ''}`}>
+            <div>
+              {pkg.popular && (
+                <div class="inline-block px-3 py-1 rounded-full bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono mb-4">
+                  {en.homePackages.mostPopular}
+                </div>
+              )}
+              <div class="text-xs font-mono opacity-75 uppercase tracking-wider mb-1">{name}</div>
+              <div class="text-3xl font-extrabold font-['Space_Grotesk'] mb-3">
+                {pkg.price} <span class="text-xs font-normal opacity-70">ref.</span>
+              </div>
+              <p class="text-xs sm:text-sm opacity-80 mb-6 leading-relaxed">{desc}</p>
+              <ul class="space-y-3 text-xs sm:text-sm opacity-90 mb-8">
+                {features.map((feat: string) => (
+                  <li>{feat}</li>
+                ))}
+              </ul>
+            </div>
+            <Button variant={pkg.popular ? "primary" : "secondary"} href={whatsappUrl} class="w-full justify-center">
+              {en.homePackages.selectBtn}
+            </Button>
+          </GlassCard>
+        );
+      })}
+    </div>
+
+    <p class="text-center text-xs sm:text-sm opacity-75 mb-12 font-mono">
+      {en.homePackages.supportNote}
+    </p>
+
+    <div class="text-center">
+      <Button variant="secondary" href="/en/packages">{en.homePackages.cta}</Button>
+    </div>
+  </Section>
+
+  <ProcessSection lang="en" />
+  <FaqSection lang="en" />
+  <CtaSection lang="en" />
+</Layout>

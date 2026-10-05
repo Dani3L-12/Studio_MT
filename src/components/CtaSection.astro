@@ -1,0 +1,44 @@
+---
+import { siteConfig } from '../config/site.config';
+import Section from './Section.astro';
+import Button from './Button.astro';
+import GlassCard from './GlassCard.astro';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  lang?: 'es' | 'en';
+}
+
+const { lang = 'es' } = Astro.props;
+const t = lang === 'en' ? en : es;
+const isEnglish = lang === 'en';
+const prefix = isEnglish ? '/en' : '';
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+---
+
+<Section class="text-center">
+  <GlassCard class="max-w-4xl mx-auto py-16 px-8 md:px-12 bg-gradient-to-br from-[#053B2A]/40 via-[var(--card-dark-bg)] to-[#00E5C3]/10 border border-[#00E5C3]/30 relative overflow-hidden shadow-2xl">
+    <!-- Glow accent -->
+    <div class="absolute -right-20 -top-20 w-64 h-64 bg-[#39FF14]/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-[#00E5C3]/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-2xl mx-auto">
+      <h2 class="text-3xl md:text-5xl font-extrabold mb-4 font-['Space_Grotesk'] tracking-tight">
+        {t.ctaSection.title}
+      </h2>
+      <p class="text-base md:text-lg opacity-85 mb-8 leading-relaxed">
+        {t.ctaSection.subtitle}
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button variant="primary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4">
+          {t.ctaSection.primaryBtn}
+        </Button>
+        <Button variant="secondary" href={`${prefix}/demos`} class="w-full sm:w-auto text-base px-8 py-4">
+          {t.ctaSection.secondaryBtn}
+        </Button>
+      </div>
+    </div>
+  </GlassCard>
+</Section>

@@ -1,0 +1,91 @@
+---
+import Section from './Section.astro';
+import GlassCard from './GlassCard.astro';
+import { faqData } from '../data/faq';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  lang?: 'es' | 'en';
+}
+
+const { lang = 'es' } = Astro.props;
+const t = lang === 'en' ? en : es;
+
+const getTranslation = (key: string) => {
+  const keys = key.split('.');
+  let obj: any = t;
+  for (const k of keys) {
+    obj = obj?.[k];
+  }
+  return obj || key;
+};
+---
+
+<Section title={t.faqSection.title} subtitle={t.faqSection.subtitle}>
+  <div class="space-y-4 max-w-3xl mx-auto text-left">
+    {faqData.map((item, index) => {
+      const qText = getTranslation(`${item.qKey}.q`);
+      const aText = getTranslation(`${item.qKey}.a`);
+      const buttonId = `faq-btn-${index}`;
+      const panelId = `faq-panel-${index}`;
+
+      return (
+        <GlassCard class="p-0 overflow-hidden transition-all duration-300">
+          <h3>
+            <button 
+              id={buttonId}
+              type="button"
+              class="w-full p-6 text-left font-bold text-base md:text-lg flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00E5C3]"
+              aria-expanded="false"
+              aria-controls={panelId}
+            >
+              <span>{qText}</span>
+              <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[#00E5C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+          </h3>
+          <div 
+            id={panelId}
+            role="region"
+            aria-labelledby={buttonId}
+            class="hidden px-6 pb-6 pt-0 text-sm opacity-80 leading-relaxed border-t border-[var(--card-dark-border)] pt-4 mt-2"
+          >
+            <p>{aText}</p>
+          </div>
+        </GlassCard>
+      );
+    })}
+  </div>
+</Section>
+
+<script>
+  document.querySelectorAll('button[aria-controls^="faq-panel-"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const panelId = btn.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId!);
+      const icon = btn.querySelector('svg');
+
+      // Close all other panels (optional accordion behavior)
+      document.querySelectorAll('button[aria-controls^="faq-panel-"]').forEach(otherBtn => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute('aria-expanded', 'false');
+          const otherPanelId = otherBtn.getAttribute('aria-controls');
+          document.getElementById(otherPanelId!)?.classList.add('hidden');
+          otherBtn.querySelector('svg')?.style.setProperty('transform', 'rotate(0deg)');
+        }
+      });
+
+      btn.setAttribute('aria-expanded', (!expanded).toString());
+      if (expanded) {
+        panel?.classList.add('hidden');
+        icon?.style.setProperty('transform', 'rotate(0deg)');
+      } else {
+        panel?.classList.remove('hidden');
+        icon?.style.setProperty('transform', 'rotate(180deg)');
+      }
+    });
+  });
+</script>

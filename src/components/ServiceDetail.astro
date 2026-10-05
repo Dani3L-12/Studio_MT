@@ -1,0 +1,72 @@
+---
+import GlassCard from './GlassCard.astro';
+import Button from './Button.astro';
+import { siteConfig } from '../config/site.config';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  title: string;
+  description: string;
+  idealText: string;
+  includes: string[];
+  iconSvg: string;
+  lang?: 'es' | 'en';
+  serviceName: string;
+}
+
+const { title, description, idealText, includes, iconSvg, lang = 'es', serviceName } = Astro.props;
+const t = lang === 'en' ? en : es;
+
+const message = lang === 'en' 
+  ? `Hello Daniel, I'm interested in quoting the service: ${serviceName}`
+  : `Hola Daniel, me interesa cotizar el servicio: ${serviceName}`;
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
+---
+
+<GlassCard class="p-8 md:p-10 flex flex-col justify-between h-full border border-[var(--card-dark-border)]">
+  <div>
+    <!-- Icon & Title -->
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#39FF14]/20 to-[#00E5C3]/20 flex items-center justify-center text-[#00E5C3] shrink-0">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={iconSvg}></svg>
+      </div>
+      <h3 class="text-2xl md:text-3xl font-bold font-['Space_Grotesk']">{title}</h3>
+    </div>
+
+    <!-- Description -->
+    <p class="text-sm md:text-base opacity-80 leading-relaxed mb-6">
+      {description}
+    </p>
+
+    <!-- Ideal for -->
+    <div class="mb-6 p-4 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)]">
+      <span class="font-bold text-xs uppercase tracking-wider text-[#00E5C3] font-mono block mb-1">
+        {t.servicesPage.idealLabel}
+      </span>
+      <p class="text-xs sm:text-sm opacity-90">{idealText}</p>
+    </div>
+
+    <!-- What's included list -->
+    <div class="mb-8">
+      <span class="font-bold text-xs uppercase tracking-wider text-[#39FF14] font-mono block mb-3">
+        {t.servicesPage.includesLabel}
+      </span>
+      <ul class="space-y-2 text-xs sm:text-sm opacity-90">
+        {includes.map((item) => (
+          <li class="flex items-start gap-2">
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA Button -->
+  <div class="pt-6 border-t border-[var(--card-dark-border)]">
+    <Button variant="primary" href={whatsappUrl} class="w-full justify-center text-sm py-3.5">
+      {t.servicesPage.quoteBtn}
+    </Button>
+  </div>
+</GlassCard>

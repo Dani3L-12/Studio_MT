@@ -1,0 +1,38 @@
+---
+import Section from './Section.astro';
+import GlassCard from './GlassCard.astro';
+import { processData } from '../data/process';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+
+interface Props {
+  lang?: 'es' | 'en';
+}
+
+const { lang = 'es' } = Astro.props;
+const t = lang === 'en' ? en : es;
+
+// Helper to get nested translation values safely
+const getTranslation = (key: string) => {
+  const keys = key.split('.');
+  let obj: any = t;
+  for (const k of keys) {
+    obj = obj?.[k];
+  }
+  return obj || key;
+};
+---
+
+<Section title={t.processSection.title} subtitle={t.processSection.subtitle}>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+    {processData.map((item) => (
+      <GlassCard class="flex flex-col items-start text-left h-full">
+        <div class="text-[#39FF14] font-mono font-bold text-xl mb-3 px-3 py-1 rounded-lg bg-[#39FF14]/10 border border-[#39FF14]/20">
+          {item.step}
+        </div>
+        <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{getTranslation(`${item.titleKey}.title`)}</h3>
+        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{getTranslation(`${item.titleKey}.desc`)}</p>
+      </GlassCard>
+    ))}
+  </div>
+</Section>

@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import GlassCard from '../components/GlassCard.astro';
+import Button from '../components/Button.astro';
+import DemoCard from '../components/DemoCard.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { demosData } from '../data/demos';
+import { siteConfig } from '../config/site.config';
+import { es } from '../i18n/es';
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+---
+
+<Layout lang="es" title={es.pages.demos.title} description={es.pages.demos.subtitle}>
+  <PageHeader title={es.pages.demos.title} subtitle={es.pages.demos.subtitle} />
+
+  <Section>
+    <!-- FILTERS -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-12" role="group" aria-label="Filtros de demos">
+      <button 
+        type="button" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer aria-pressed:bg-[#39FF14] aria-pressed:text-[#070B0A]" 
+        data-filter="all"
+        aria-pressed="true"
+      >
+        Todos
+      </button>
+      <button 
+        type="button" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer" 
+        data-filter="comida"
+        aria-pressed="false"
+      >
+        Comida
+      </button>
+      <button 
+        type="button" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer" 
+        data-filter="tiendas"
+        aria-pressed="false"
+      >
+        Tiendas
+      </button>
+      <button 
+        type="button" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer" 
+        data-filter="servicios"
+        aria-pressed="false"
+      >
+        Servicios
+      </button>
+    </div>
+
+    <!-- Live region for screen readers -->
+    <div id="filter-status" class="sr-only" aria-live="polite">Mostrando todas las demos.</div>
+
+    <!-- DEMOS GRID -->
+    <div id="demos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
+      {demosData.map((demo) => (
+        <div class="demo-item" data-category={demo.category}>
+          <DemoCard demo={demo} lang="es" />
+        </div>
+      ))}
+    </div>
+
+    <!-- NOTE -->
+    <p class="text-center text-xs opacity-70 max-w-xl mx-auto mb-16 font-mono">
+      Las demos usan negocios ficticios para mostrar el estilo y las funciones. Tu web usará tu logo, colores y contenido.
+    </p>
+  </Section>
+
+  <!-- CTA CUSTOM -->
+  <Section class="text-center pt-0">
+    <GlassCard class="max-w-4xl mx-auto py-12 px-8 bg-gradient-to-br from-[#053B2A]/40 to-[var(--card-dark-bg)] border border-[#00E5C3]/30">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-3 font-['Space_Grotesk']">
+        ¿No ves tu tipo de negocio? Cuéntanos qué necesitas.
+      </h2>
+      <p class="text-sm opacity-80 max-w-lg mx-auto mb-6">
+        Adaptamos el diseño exacto para cualquier rubro en Cusco.
+      </p>
+      <Button variant="primary" href={whatsappUrl}>
+        Cotizar por WhatsApp
+      </Button>
+    </GlassCard>
+  </Section>
+</Layout>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const demoItems = document.querySelectorAll('.demo-item');
+  const statusAnnouncer = document.getElementById('filter-status');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+
+      filterBtns.forEach(b => {
+        b.setAttribute('aria-pressed', 'false');
+        b.classList.remove('bg-[#39FF14]', 'text-[#070B0A]');
+      });
+      btn.setAttribute('aria-pressed', 'true');
+      btn.classList.add('bg-[#39FF14]', 'text-[#070B0A]');
+
+      let count = 0;
+      demoItems.forEach(item => {
+        const cat = item.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          (item as HTMLElement).style.display = 'block';
+          count++;
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+
+      if (statusAnnouncer) {
+        statusAnnouncer.textContent = filter === 'all' 
+          ? `Mostrando todas las ${count} demos.` 
+          : `Mostrando ${count} demos de la categoría ${filter}.`;
+      }
+    });
+  });
+</script>

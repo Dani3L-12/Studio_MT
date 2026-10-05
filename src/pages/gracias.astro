@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import GlassCard from '../components/GlassCard.astro';
+import Button from '../components/Button.astro';
+import { siteConfig } from '../config/site.config';
+import { es } from '../i18n/es';
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+---
+
+<Layout lang="es" title={es.contactPage.thanksTitle} description={es.contactPage.thanksSubtitle}>
+  <head slot="head">
+    <meta name="robots" content="noindex" />
+  </head>
+
+  <Section class="text-center py-32">
+    <GlassCard class="max-w-lg mx-auto p-10 space-y-6">
+      <div class="w-16 h-16 rounded-full bg-[#39FF14]/20 text-[#39FF14] flex items-center justify-center text-3xl mx-auto mb-4">
+        ✓
+      </div>
+      <h1 class="text-3xl font-extrabold font-['Space_Grotesk']">{es.contactPage.thanksTitle}</h1>
+      <p class="text-sm md:text-base opacity-80 leading-relaxed">{es.contactPage.thanksSubtitle}</p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 pt-4">
+        <Button variant="primary" href={whatsappUrl} class="w-full justify-center">
+          Escribir por WhatsApp
+        </Button>
+        <Button variant="secondary" href="/" class="w-full justify-center">
+          {es.contactPage.backHome}
+        </Button>
+      </div>
+    </GlassCard>
+  </Section>
+</Layout>

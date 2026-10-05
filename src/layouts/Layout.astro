@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import ThemeScript from '../components/ThemeScript.astro';
+import SEO from '../components/SEO.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'es' | 'en';
+  noindex?: boolean;
+}
+
+const { 
+  title = "Páginas Web Profesionales para Negocios en Cusco", 
+  description = "Creamos páginas web rápidas y modernas para restaurantes, cafés y negocios de Cusco.",
+  lang = 'es',
+  noindex = false
+} = Astro.props;
+
+const skipText = lang === 'en' ? "Skip to main content" : "Saltar al contenido principal";
+---
+
+<!doctype html>
+<html lang={lang} class="dark">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<SEO title={title} description={description} lang={lang} noindex={noindex} />
+
+		<slot name="head" />
+
+		<ThemeScript />
+	</head>
+	<body class="min-h-screen flex flex-col justify-between selection:bg-[#39FF14] selection:text-[#070B0A] relative overflow-x-hidden">
+		<!-- Skip to content link for accessibility -->
+		<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded-xl focus:bg-[#39FF14] focus:text-[#070B0A] focus:font-bold">
+			{skipText}
+		</a>
+
+		<!-- Background light spots -->
+		<div class="bg-light-spots" aria-hidden="true">
+			<div class="spot-1"></div>
+			<div class="spot-2"></div>
+		</div>
+
+		<Navbar lang={lang} />
+
+		<main id="main-content" class="flex-1">
+			<slot />
+		</main>
+
+		<Footer lang={lang} />
+
+		<WhatsAppFloat />
+	</body>
+</html>

@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import GlassCard from '../components/GlassCard.astro';
+import { siteConfig } from '../config/site.config';
+---
+
+<Layout lang="es" title="Política de Privacidad" description="Política de privacidad y tratamiento de datos personales en Studio MG.">
+  <PageHeader title="Política de Privacidad" subtitle={`Última actualización: ${siteConfig.lastUpdated}`} />
+
+  <Section>
+    {import.meta.env.DEV && (
+      <div class="max-w-2xl mx-auto mb-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono text-center">
+        ⚠️ BORRADOR: revisar con un profesional antes de publicar.
+      </div>
+    )}
+
+    <div class="max-w-2xl mx-auto space-y-8">
+      <GlassCard class="p-8 space-y-6 text-sm leading-relaxed opacity-90">
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">1. Responsable del Tratamiento</h2>
+          <p>
+            El titular de este sitio web y responsable del tratamiento de datos es <strong>{siteConfig.legalHolder}</strong>, con contacto en el correo electrónico <a href={`mailto:${siteConfig.email}`} class="text-[#39FF14] underline">{siteConfig.email}</a> en Cusco, Perú.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">2. Datos que Recogemos</h2>
+          <p class="mb-2">A través de nuestros formularios de contacto o canales directos, podemos recopilar:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Nombre o nombre del negocio.</li>
+            <li>Número de WhatsApp o teléfono.</li>
+            <li>Correo electrónico (opcional).</li>
+            <li>Detalles del proyecto o mensaje enviado.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">3. Finalidad del Uso de Datos</h2>
+          <p>
+            Los datos facilitados se utilizan única y exclusivamente para responder a tus consultas, coordinar cotizaciones y gestionar el desarrollo de proyectos web solicitados. No vendemos ni cedemos datos a terceros.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">4. Proveedores y Enlaces Externos</h2>
+          <p>
+            Este sitio estático se aloja en Netlify (que procesa los envíos del formulario de contacto). Asimismo, incluimos enlaces directos a WhatsApp y redes sociales de terceros (Facebook, Instagram, TikTok), los cuales cuentan con sus propias políticas de privacidad.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">5. Conservación y Derechos (ARCO)</h2>
+          <p>
+            Conservamos tus datos el tiempo necesario para cumplir con la relación comercial o de consulta. Puedes ejercer tus derechos de acceso, rectificación, cancelación u oposición escribiendo a <a href={`mailto:${siteConfig.email}`} class="text-[#39FF14] underline">{siteConfig.email}</a>.
+          </p>
+        </div>
+      </GlassCard>
+    </div>
+  </Section>
+</Layout>

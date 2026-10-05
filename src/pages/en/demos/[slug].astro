@@ -1,0 +1,172 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Section from '../../../components/Section.astro';
+import GlassCard from '../../../components/GlassCard.astro';
+import Button from '../../../components/Button.astro';
+import DemoCard from '../../../components/DemoCard.astro';
+import CtaSection from '../../../components/CtaSection.astro';
+import { demosData, type DemoItem } from '../../../data/demos';
+import { packagesData } from '../../../data/packages';
+import { siteConfig } from '../../../config/site.config';
+import { en } from '../../../i18n/en';
+
+export function getStaticPaths() {
+  return demosData.map((demo) => {
+    return {
+      params: { slug: demo.slug },
+      props: { demo },
+    };
+  });
+}
+
+interface Props {
+  demo: DemoItem;
+}
+
+const { demo } = Astro.props;
+const t = demo.en;
+const otherDemos = demosData.filter(d => d.slug !== demo.slug);
+
+// Recommended package lookup
+const recommendedPkg = packagesData.find(p => p.id === demo.packageRecommended) || packagesData[1];
+const pkgName = getTranslation(recommendedPkg.nameKey);
+const pkgDelivery = getTranslation(recommendedPkg.deliveryKey);
+
+function getTranslation(key: string) {
+  const keys = key.split('.');
+  let obj: any = en;
+  for (const k of keys) {
+    obj = obj?.[k];
+  }
+  return obj || key;
+}
+
+const whatsappDemoUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hello Daniel, I want a website like the demo "${t.name}".`)}`;
+const whatsappSoonUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hello Daniel, I'm interested in the demo "${t.name}" which is in preparation.`)}`;
+const liveUrl = `/en/live/${demo.slug}`;
+---
+
+<Layout lang="en" title={`${t.name} — Demo`} description={t.shortDesc}>
+  <Section class="pt-12 pb-20">
+    
+    <!-- Back Link -->
+    <div class="max-w-4xl mx-auto mb-8">
+      <a href="/en/demos" class="inline-flex items-center gap-2 text-sm font-mono opacity-80 hover:text-[#00E5C3] transition-colors">
+        {en.demoDetail.back}
+      </a>
+    </div>
+
+    <!-- Header -->
+    <div class="max-w-4xl mx-auto text-center mb-12">
+      <div class="inline-block px-3 py-1 rounded-full bg-[#00E5C3]/10 text-[#00E5C3] text-xs font-mono font-bold uppercase tracking-wider mb-4">
+        {demo.category}
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 font-['Space_Grotesk']">
+        {t.name}
+      </h1>
+      <p class="text-base md:text-lg opacity-85 leading-relaxed max-w-2xl mx-auto">
+        {t.longDesc}
+      </p>
+    </div>
+
+    <!-- Large Mockup Preview -->
+    <div class="max-w-4xl mx-auto mb-12">
+      <div class="glass-card rounded-3xl p-6 md:p-8 shadow-2xl border border-[var(--card-dark-border)] relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#39FF14]/10 to-[#00E5C3]/10 blur-3xl -z-10"></div>
+        <div class="flex items-center justify-between pb-4 mb-6 border-b border-[var(--card-dark-border)]">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="px-4 py-1 rounded-full bg-[var(--card-dark-bg)] text-xs font-mono opacity-85">
+            {t.name} • Studio MG Demo
+          </div>
+          <div class="w-12"></div>
+        </div>
+
+        <div class="h-64 md:h-80 rounded-2xl bg-gradient-to-br from-[#053B2A]/90 via-[#070B0A] to-[#00E5C3]/20 flex flex-col items-center justify-center p-6 text-center border border-[var(--card-dark-border)]">
+          <span class="text-4xl mb-3">🚀</span>
+          <h3 class="font-bold text-xl mb-2 font-['Space_Grotesk']">{t.name}</h3>
+          <p class="text-xs md:text-sm opacity-75 max-w-md">{t.shortDesc}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Action Block -->
+    <div class="max-w-4xl mx-auto mb-16 text-center">
+      {demo.status === 'live' ? (
+        <Button variant="primary" href={liveUrl} class="text-base px-8 py-4">
+          {en.demoDetail.liveDemoBtn}
+        </Button>
+      ) : (
+        <GlassCard class="p-8 bg-gradient-to-r from-[#053B2A]/30 to-[var(--card-dark-bg)] border border-[#39FF14]/30 max-w-2xl mx-auto">
+          <p class="text-sm md:text-base opacity-90 mb-6 leading-relaxed">
+            {en.demoDetail.soonBoxText}
+          </p>
+          <Button variant="primary" href={whatsappSoonUrl}>
+            {en.demoDetail.askWhatsApp}
+          </Button>
+        </GlassCard>
+      )}
+    </div>
+
+    <!-- Target Audience & Features Grid -->
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      <GlassCard class="p-8">
+        <h3 class="font-bold text-lg mb-3 text-[#00E5C3] font-['Space_Grotesk']">{en.demoDetail.targetLabel}</h3>
+        <p class="text-sm opacity-80 leading-relaxed">{t.target}</p>
+      </GlassCard>
+
+      <GlassCard class="p-8">
+        <h3 class="font-bold text-lg mb-3 text-[#39FF14] font-['Space_Grotesk']">{en.demoDetail.featuresLabel}</h3>
+        <ul class="space-y-2 text-sm opacity-90">
+          {t.features.map(feat => (
+            <li class="flex items-center gap-2">
+              <span class="text-[#39FF14]">✓</span> {feat}
+            </li>
+          ))}
+        </ul>
+      </GlassCard>
+    </div>
+
+    <!-- Recommended Package Card -->
+    <div class="max-w-4xl mx-auto mb-16">
+      <GlassCard class="p-8 md:p-10 border-[#39FF14]/50 bg-gradient-to-r from-[#39FF14]/10 to-[var(--card-dark-bg)] flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="text-left">
+          <span class="text-xs font-mono text-[#39FF14] font-bold uppercase tracking-wider block mb-1">
+            {en.demoDetail.recommendedPlan}
+          </span>
+          <h3 class="text-2xl font-bold font-['Space_Grotesk'] mb-1">{pkgName} — {recommendedPkg.price} <span class="text-xs font-normal opacity-70">ref.</span></h3>
+          <p class="text-xs opacity-75">Estimated delivery in {pkgDelivery}</p>
+        </div>
+        <Button variant="secondary" href="/en/packages">
+          {en.demoDetail.viewPackages}
+        </Button>
+      </GlassCard>
+    </div>
+
+    <!-- Main CTA Button & Legend -->
+    <div class="max-w-4xl mx-auto text-center mb-20 space-y-4">
+      <Button variant="primary" href={whatsappDemoUrl} class="text-base px-10 py-4 shadow-[0_0_30px_rgba(57,255,20,0.3)]">
+        {en.demoDetail.wantThis}
+      </Button>
+      <p class="text-xs font-mono opacity-50 block">
+        {en.demoDetail.legend}
+      </p>
+    </div>
+
+    <!-- Other Demos -->
+    <div class="max-w-5xl mx-auto mb-16">
+      <h3 class="text-2xl font-bold mb-8 text-center font-['Space_Grotesk']">{en.demoDetail.otherDemos}</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {otherDemos.map(od => (
+          <DemoCard demo={od} lang="en" />
+        ))}
+      </div>
+    </div>
+
+  </Section>
+
+  <CtaSection lang="en" />
+</Layout>

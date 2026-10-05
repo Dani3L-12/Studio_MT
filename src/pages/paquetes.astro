@@ -1,0 +1,300 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import GlassCard from '../components/GlassCard.astro';
+import Button from '../components/Button.astro';
+import FaqSection from '../components/FaqSection.astro';
+import CtaSection from '../components/CtaSection.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { packagesData } from '../data/packages';
+import { pricingFaqData } from '../data/faq';
+import { siteConfig } from '../config/site.config';
+import { es } from '../i18n/es';
+
+const getTranslation = (key: string) => {
+  const keys = key.split('.');
+  let obj: any = es;
+  for (const k of keys) {
+    obj = obj?.[k];
+  }
+  return obj || key;
+};
+
+const extrasList = [
+  es.extrasData.e1,
+  es.extrasData.e2,
+  es.extrasData.e3,
+  es.extrasData.e4,
+];
+
+const workTermsList = [
+  es.workTermsData.t1,
+  es.workTermsData.t2,
+  es.workTermsData.t3,
+  es.workTermsData.t4,
+];
+
+const comparisonRows = [
+  { feature: es.packagesPage.tRowType, ess: "Carta digital / Landing", pro: "Web multicategoría", pre: "Catálogo / Tienda web" },
+  { feature: es.packagesPage.tRowPages, ess: "1 página / sección", pro: "Hasta 5 secciones", pre: "Secciones ilimitadas" },
+  { feature: es.packagesPage.tRowProducts, ess: "Hasta 15 ítems", pro: "Hasta 40 ítems", pre: "Hasta ~30 productos con carrito" },
+  { feature: es.packagesPage.tRowGallery, ess: "—", pro: "✓", pre: "✓" },
+  { feature: es.packagesPage.tRowSeo, ess: "—", pro: "✓", pre: "✓" },
+  { feature: es.packagesPage.tRowGoogle, ess: "—", pro: "✓", pre: "✓" },
+  { feature: es.packagesPage.tRowEnglish, ess: "—", pro: "—", pre: "✓" },
+  { feature: es.packagesPage.tRowRevisions, ess: "1 ronda", pro: "2 rondas", pre: "3 rondas" },
+  { feature: es.packagesPage.tRowTraining, ess: "—", pro: "—", pre: "✓ (por Meet)" },
+  { feature: es.packagesPage.tRowDelivery, ess: "3 - 5 días", pro: "5 - 7 días", pre: "7 - 10 días" },
+];
+
+const serviceSchemas = packagesData.map(pkg => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": getTranslation(pkg.nameKey),
+  "description": getTranslation(pkg.descKey),
+  "provider": {
+    "@type": "ProfessionalService",
+    "name": siteConfig.brandName
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": pkg.price.replace("S/ ", ""),
+    "priceCurrency": "PEN"
+  }
+}));
+
+const pricingFaqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": pricingFaqData.map(item => ({
+    "@type": "Question",
+    "name": getTranslation(`${item.qKey}.q`),
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": getTranslation(`${item.qKey}.a`)
+    }
+  }))
+};
+---
+
+<Layout lang="es" title={es.pages.packages.title} description={es.pages.packages.subtitle}>
+  <JsonLd schema={[...serviceSchemas, pricingFaqSchema]} />
+
+  <PageHeader title={es.packagesPage.headerTitle} subtitle={es.packagesPage.headerSubtitle} />
+
+  <!-- PAQUETES DE PRECIOS -->
+  <Section>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+      {packagesData.map((pkg) => {
+        const name = getTranslation(pkg.nameKey);
+        const desc = getTranslation(pkg.descKey);
+        const delivery = getTranslation(pkg.deliveryKey);
+        const revisions = getTranslation(pkg.revisionsKey);
+        const features = pkg.featuresKey.map(f => getTranslation(f));
+        const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hola Daniel, me interesa cotizar el paquete ${name} (${pkg.price}).`)}`;
+
+        return (
+          <GlassCard class={`flex flex-col justify-between h-full ${pkg.popular ? 'border-[#39FF14] bg-gradient-to-b from-[#39FF14]/15 to-[var(--card-dark-bg)] shadow-[0_0_30px_rgba(57,255,20,0.15)]' : ''}`}>
+            <div>
+              {pkg.popular && (
+                <div class="inline-block px-3 py-1 rounded-full bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono mb-4">
+                  {es.homePackages.mostPopular}
+                </div>
+              )}
+              <div class="text-xs font-mono opacity-75 uppercase tracking-wider mb-1">{name}</div>
+              <div class="text-3xl font-extrabold font-['Space_Grotesk'] mb-3">
+                {pkg.price} <span class="text-xs font-normal opacity-70">ref.</span>
+              </div>
+              <p class="text-xs sm:text-sm opacity-80 mb-6 leading-relaxed">{desc}</p>
+              
+              <div class="space-y-2 mb-6 p-3 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-xs font-mono">
+                <div>⏱️ {es.packagesPage.deliveryLabel} <span class="text-[#00E5C3] font-bold">{delivery}</span></div>
+                <div>🔄 {es.packagesPage.revisionsLabel} <span class="text-[#39FF14] font-bold">{revisions}</span></div>
+              </div>
+
+              <ul class="space-y-3 text-xs sm:text-sm opacity-90 mb-8">
+                {features.map((feat: string) => (
+                  <li>{feat}</li>
+                ))}
+              </ul>
+            </div>
+            <Button variant={pkg.popular ? "primary" : "secondary"} href={whatsappUrl} class="w-full justify-center text-sm py-3.5">
+              {es.packagesPage.quoteBtn}
+            </Button>
+          </GlassCard>
+        );
+      })}
+    </div>
+
+    <!-- TABLA COMPARATIVA -->
+    <div class="mb-20">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 font-['Space_Grotesk']">
+          {es.packagesPage.tableTitle}
+        </h2>
+        <p class="text-sm md:text-base opacity-80">{es.packagesPage.tableSubtitle}</p>
+      </div>
+
+      <div class="max-w-5xl mx-auto glass-card rounded-3xl overflow-x-auto border border-[var(--card-dark-border)]">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b border-[var(--card-dark-border)] bg-[var(--card-dark-bg)] font-['Space_Grotesk']">
+              <th scope="col" class="p-4 sm:p-5 font-bold">{es.packagesPage.colFeature}</th>
+              <th scope="col" class="p-4 sm:p-5 font-bold text-center">{es.packagesPage.colEssential}</th>
+              <th scope="col" class="p-4 sm:p-5 font-bold text-center text-[#39FF14]">{es.packagesPage.colProfessional}</th>
+              <th scope="col" class="p-4 sm:p-5 font-bold text-center text-[#00E5C3]">{es.packagesPage.colPremium}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[var(--card-dark-border)] opacity-90 font-mono">
+            {comparisonRows.map((row) => (
+              <tr class="hover:bg-white/5 transition-colors">
+                <th scope="row" class="p-4 sm:p-5 font-normal font-sans">{row.feature}</th>
+                <td class="p-4 sm:p-5 text-center">{row.ess}</td>
+                <td class="p-4 sm:p-5 text-center font-bold">{row.pro}</td>
+                <td class="p-4 sm:p-5 text-center">{row.pre}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PLAN DE SOPORTE -->
+    <div class="max-w-3xl mx-auto mb-20">
+      <GlassCard class="p-8 md:p-10 text-center border-[#00E5C3]/40 bg-gradient-to-br from-[#00E5C3]/10 to-[var(--card-dark-bg)]">
+        <span class="text-xs font-mono uppercase tracking-widest text-[#00E5C3] font-bold block mb-2">{es.packagesPage.supportTitle}</span>
+        <h3 class="text-2xl md:text-3xl font-extrabold font-['Space_Grotesk'] mb-4">{es.packagesPage.supportPrice}</h3>
+        <p class="text-sm md:text-base opacity-80 leading-relaxed mb-6">{es.packagesPage.supportDesc}</p>
+        <span class="inline-block px-4 py-1.5 rounded-full bg-[var(--card-dark-bg)] text-xs font-mono opacity-75 border border-[var(--card-dark-border)]">
+          {es.packagesPage.supportNote}
+        </span>
+      </GlassCard>
+    </div>
+
+    <!-- EXTRAS -->
+    <div class="mb-20">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 font-['Space_Grotesk']">
+          {es.packagesPage.extrasTitle}
+        </h2>
+        <p class="text-sm md:text-base opacity-80">{es.packagesPage.extrasSubtitle}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        {extrasList.map((extra) => (
+          <GlassCard class="p-6 flex flex-col justify-between h-full">
+            <div>
+              <h3 class="font-bold text-base mb-2 font-['Space_Grotesk']">{extra.title}</h3>
+              <p class="text-xs opacity-75 mb-4">{extra.desc}</p>
+            </div>
+            <div class="text-xs font-mono font-bold text-[#39FF14] pt-4 border-t border-[var(--card-dark-border)]">
+              {extra.price}
+            </div>
+          </GlassCard>
+        ))}
+      </div>
+    </div>
+
+    <!-- CÓMO TRABAJAMOS -->
+    <div class="mb-20 max-w-5xl mx-auto">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 font-['Space_Grotesk']">
+          {es.packagesPage.workTermsTitle}
+        </h2>
+        <p class="text-sm md:text-base opacity-80">{es.packagesPage.workTermsSubtitle}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {workTermsList.map((term, i) => (
+          <GlassCard class="p-6 flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-[#00E5C3]/10 text-[#00E5C3] flex items-center justify-center font-mono font-bold shrink-0">
+              0{i + 1}
+            </div>
+            <div>
+              <h3 class="font-bold text-base mb-1 font-['Space_Grotesk']">{term.title}</h3>
+              <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{term.desc}</p>
+            </div>
+          </GlassCard>
+        ))}
+      </div>
+    </div>
+
+    <!-- PREGUNTAS SOBRE PRECIOS -->
+    <div class="mb-12 max-w-3xl mx-auto">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 font-['Space_Grotesk']">
+          {es.packagesPage.faqPricingTitle}
+        </h2>
+        <p class="text-sm opacity-80">{es.packagesPage.faqPricingSubtitle}</p>
+      </div>
+
+      <div class="space-y-4">
+        {pricingFaqData.map((item, index) => {
+          const qText = getTranslation(`${item.qKey}.q`);
+          const aText = getTranslation(`${item.qKey}.a`);
+          const buttonId = `pricing-faq-btn-${index}`;
+          const panelId = `pricing-faq-panel-${index}`;
+
+          return (
+            <GlassCard class="p-0 overflow-hidden">
+              <h3>
+                <button 
+                  id={buttonId}
+                  type="button"
+                  class="w-full p-6 text-left font-bold text-base flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00E5C3]"
+                  aria-expanded="false"
+                  aria-controls={panelId}
+                >
+                  <span>{qText}</span>
+                  <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[#00E5C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+              </h3>
+              <div 
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                class="hidden px-6 pb-6 text-sm opacity-80 leading-relaxed border-t border-[var(--card-dark-border)] pt-4 mt-2"
+              >
+                <p>{aText}</p>
+              </div>
+            </GlassCard>
+          );
+        })}
+      </div>
+    </div>
+  </Section>
+
+  <CtaSection lang="es" />
+</Layout>
+
+<script>
+  document.querySelectorAll('button[aria-controls^="pricing-faq-panel-"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const panelId = btn.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId!);
+      const icon = btn.querySelector('svg');
+
+      document.querySelectorAll('button[aria-controls^="pricing-faq-panel-"]').forEach(otherBtn => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute('aria-expanded', 'false');
+          const otherPanelId = otherBtn.getAttribute('aria-controls');
+          document.getElementById(otherPanelId!)?.classList.add('hidden');
+          otherBtn.querySelector('svg')?.style.setProperty('transform', 'rotate(0deg)');
+        }
+      });
+
+      btn.setAttribute('aria-expanded', (!expanded).toString());
+      if (expanded) {
+        panel?.classList.add('hidden');
+        icon?.style.setProperty('transform', 'rotate(0deg)');
+      } else {
+        panel?.classList.remove('hidden');
+        icon?.style.setProperty('transform', 'rotate(180deg)');
+      }
+    });
+  });
+</script>

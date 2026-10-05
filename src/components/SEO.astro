@@ -1,0 +1,66 @@
+---
+import { siteConfig } from '../config/site.config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  lang?: 'es' | 'en';
+  noindex?: boolean;
+}
+
+const { 
+  title = "Páginas Web Profesionales en Cusco", 
+  description = "Creamos páginas web rápidas y modernas para restaurantes, cafés y negocios de Cusco.",
+  image = "/og-image.svg",
+  lang = 'es',
+  noindex = false
+} = Astro.props;
+
+const fullTitle = `${title} | ${siteConfig.brandName}`;
+const currentPath = Astro.url.pathname;
+const canonicalUrl = `${siteConfig.siteUrl}${currentPath}`;
+
+// Construct alternate hreflang paths
+const isEnglish = lang === 'en';
+const cleanPath = currentPath.replace(/^\/en/, '') || '/';
+const esUrl = `${siteConfig.siteUrl}${cleanPath === '/' ? '/' : cleanPath}`;
+const enUrl = `${siteConfig.siteUrl}/en${cleanPath === '/' ? '' : cleanPath}`;
+const ogImageUrl = `${siteConfig.siteUrl}${image}`;
+---
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow" />
+)}
+
+<!-- Hreflang Alternates -->
+<link rel="alternate" hreflang="es" href={esUrl} />
+<link rel="alternate" hreflang="en" href={enUrl} />
+<link rel="alternate" hreflang="x-default" href={esUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImageUrl} />
+<meta property="og:locale" content={isEnglish ? "en_US" : "es_PE"} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImageUrl} />
+
+<!-- Favicon & Touch Icons -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />

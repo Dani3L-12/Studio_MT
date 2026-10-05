@@ -1,0 +1,30 @@
+---
+import { siteConfig } from '../config/site.config';
+import { testimonialsData } from '../data/testimonials';
+import Section from './Section.astro';
+import GlassCard from './GlassCard.astro';
+
+interface Props {
+  lang?: 'es' | 'en';
+}
+
+const { lang = 'es' } = Astro.props;
+// IMPORTANTE: Solo deben ingresarse reseñas reales con permiso explícito del cliente.
+const show = siteConfig.showTestimonials && testimonialsData.length > 0;
+---
+
+{show && (
+  <Section title={lang === 'en' ? "Client Testimonials" : "Testimonios"} subtitle={lang === 'en' ? "Real words from businesses trusting us." : "Palabras reales de negocios que confían en nosotros."}>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      {testimonialsData.map((t) => (
+        <GlassCard class="p-8 flex flex-col justify-between">
+          <p class="text-sm opacity-85 leading-relaxed mb-6 italic">"{t.text}"</p>
+          <div>
+            <div class="font-bold font-['Space_Grotesk'] text-base">{t.name}</div>
+            <div class="text-xs font-mono text-[#00E5C3]">{t.business}</div>
+          </div>
+        </GlassCard>
+      ))}
+    </div>
+  </Section>
+)}

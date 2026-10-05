@@ -1,0 +1,136 @@
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #070B0A;
+    --bg-light: #F4FBF8;
+    --neon-green: #39FF14;
+    --turquoise: #00E5C3;
+    --deep-green: #053B2A;
+    
+    --card-dark-bg: rgba(7, 11, 10, 0.75);
+    --card-dark-border: rgba(0, 229, 195, 0.2);
+    --card-light-bg: rgba(255, 255, 255, 0.85);
+    --card-light-border: rgba(5, 59, 42, 0.15);
+  }
+
+  html.dark {
+    background-color: var(--bg-dark);
+    color: #F1F7F5;
+  }
+
+  html:not(.dark) {
+    background-color: var(--bg-light);
+    color: #0A1410;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* Accessible focus ring */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--turquoise);
+    outline-offset: 2px;
+  }
+}
+
+/* Glassmorphism & custom utility classes */
+.glass-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--card-dark-border);
+  background: var(--card-dark-bg);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 195, 0.4), transparent);
+}
+
+html:not(.dark) .glass-card {
+  border: 1px solid var(--card-light-border);
+  background: var(--card-light-bg);
+  box-shadow: 0 8px 32px 0 rgba(5, 59, 42, 0.08);
+}
+
+html:not(.dark) .glass-card::before {
+  background: linear-gradient(90deg, transparent, rgba(5, 59, 42, 0.2), transparent);
+}
+
+/* Background light spots (optimized, lighter blur) */
+.bg-light-spots {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -10;
+  overflow: hidden;
+}
+
+.spot-1 {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.06) 0%, rgba(0, 229, 195, 0.02) 50%, transparent 70%);
+  filter: blur(40px);
+}
+
+.spot-2 {
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 40vw;
+  height: 40vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 229, 195, 0.05) 0%, rgba(5, 59, 42, 0.03) 50%, transparent 70%);
+  filter: blur(40px);
+}
+
+html:not(.dark) .spot-1 {
+  background: radial-gradient(circle, rgba(0, 229, 195, 0.08) 0%, rgba(57, 255, 20, 0.03) 50%, transparent 70%);
+}
+
+html:not(.dark) .spot-2 {
+  background: radial-gradient(circle, rgba(5, 59, 42, 0.05) 0%, rgba(0, 229, 195, 0.05) 50%, transparent 70%);
+}
+
+@media (max-width: 768px) {
+  .glass-card {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .spot-1, .spot-2 {
+    filter: blur(30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import GlassCard from '../../components/GlassCard.astro';
+import { siteConfig } from '../../config/site.config';
+---
+
+<Layout lang="en" title="Privacy Policy" description="Privacy policy and personal data treatment at Studio MG.">
+  <PageHeader title="Privacy Policy" subtitle={`Last updated: ${siteConfig.lastUpdated}`} />
+
+  <Section>
+    {import.meta.env.DEV && (
+      <div class="max-w-2xl mx-auto mb-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono text-center">
+        ⚠️ DRAFT: review with a professional before publishing.
+      </div>
+    )}
+
+    <div class="max-w-2xl mx-auto space-y-8">
+      <GlassCard class="p-8 space-y-6 text-sm leading-relaxed opacity-90">
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">1. Data Controller</h2>
+          <p>
+            The owner of this website and data controller is <strong>{siteConfig.legalHolder}</strong>, with contact email <a href={`mailto:${siteConfig.email}`} class="text-[#39FF14] underline">{siteConfig.email}</a> in Cusco, Peru.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">2. Data We Collect</h2>
+          <p class="mb-2">Through our contact forms or direct channels, we may collect:</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Name or business name.</li>
+            <li>WhatsApp number or phone.</li>
+            <li>Email address (optional).</li>
+            <li>Project details or message sent.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">3. Purpose of Data Use</h2>
+          <p>
+            The data provided is used solely and exclusively to answer your inquiries, coordinate quotes, and manage requested web development projects. We do not sell or share data with third parties.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">4. Providers and External Links</h2>
+          <p>
+            This static site is hosted on Netlify (which processes contact form submissions). We also include direct links to WhatsApp and third-party social networks (Facebook, Instagram, TikTok), which have their own privacy policies.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold font-['Space_Grotesk'] mb-2 text-[#00E5C3]">5. Retention and Rights</h2>
+          <p>
+            We retain your data as long as necessary to fulfill the business or inquiry relationship. You can exercise your rights of access, rectification, cancellation, or objection by writing to <a href={`mailto:${siteConfig.email}`} class="text-[#39FF14] underline">{siteConfig.email}</a>.
+          </p>
+        </div>
+      </GlassCard>
+    </div>
+  </Section>
+</Layout>

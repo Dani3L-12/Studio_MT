@@ -1,0 +1,314 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import GlassCard from '../components/GlassCard.astro';
+import Button from '../components/Button.astro';
+import FaqSection from '../components/FaqSection.astro';
+import CtaSection from '../components/CtaSection.astro';
+import { siteConfig } from '../config/site.config';
+import { contactFaqData } from '../data/faq';
+import { es } from '../i18n/es';
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+const emailUrl = `mailto:${siteConfig.email}`;
+
+const getTranslation = (key: string) => {
+  const keys = key.split('.');
+  let obj: any = es;
+  for (const k of keys) {
+    obj = obj?.[k];
+  }
+  return obj || key;
+};
+---
+
+<Layout lang="es" title={es.contactPage.headerTitle} description={es.contactPage.headerSubtitle}>
+  <PageHeader title={es.contactPage.headerTitle} subtitle={es.contactPage.headerSubtitle} />
+
+  <Section>
+    <!-- CANALES DE CONTACTO -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+      
+      <!-- WhatsApp (destacado) -->
+      <GlassCard class="p-6 flex flex-col justify-between border-[#25D366]/40 bg-gradient-to-br from-[#25D366]/10 to-[var(--card-dark-bg)]">
+        <div>
+          <div class="text-[#25D366] font-mono font-bold text-xs uppercase tracking-wider mb-2">WhatsApp</div>
+          <h3 class="font-bold text-lg mb-1 font-['Space_Grotesk']">{es.contactPage.whatsappCardTitle}</h3>
+          <p class="text-xs opacity-75 mb-6">{es.contactPage.whatsappCardDesc}</p>
+        </div>
+        <Button variant="primary" href={whatsappUrl} class="w-full justify-center text-xs py-3 bg-[#25D366] text-white hover:bg-[#20ba5a] shadow-[0_4px_15px_rgba(37,211,102,0.3)]">
+          {es.contactPage.whatsappBtn}
+        </Button>
+      </GlassCard>
+
+      <!-- Correo -->
+      <GlassCard class="p-6 flex flex-col justify-between">
+        <div>
+          <div class="text-[#00E5C3] font-mono font-bold text-xs uppercase tracking-wider mb-2">Email</div>
+          <h3 class="font-bold text-lg mb-1 font-['Space_Grotesk']">{es.contactPage.emailCardTitle}</h3>
+          <p class="text-xs opacity-75 mb-4">{es.contactPage.emailCardDesc}</p>
+          <a href={emailUrl} class="font-mono text-xs text-[#00E5C3] hover:underline block mb-6">{siteConfig.email}</a>
+        </div>
+        <Button variant="secondary" href={emailUrl} class="w-full justify-center text-xs py-3">
+          Enviar correo
+        </Button>
+      </GlassCard>
+
+      <!-- Redes sociales -->
+      <GlassCard class="p-6 flex flex-col justify-between">
+        <div>
+          <div class="text-[#39FF14] font-mono font-bold text-xs uppercase tracking-wider mb-2">Social</div>
+          <h3 class="font-bold text-lg mb-1 font-['Space_Grotesk']">{es.contactPage.socialCardTitle}</h3>
+          <p class="text-xs opacity-75 mb-6">{es.contactPage.socialCardDesc}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg glass-card hover:border-[#00E5C3]" aria-label="Facebook">FB</a>
+          <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg glass-card hover:border-[#00E5C3]" aria-label="Instagram">IG</a>
+          <a href={siteConfig.socialLinks.tiktok} target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg glass-card hover:border-[#00E5C3]" aria-label="TikTok">TK</a>
+        </div>
+      </GlassCard>
+
+      <!-- Atención -->
+      <GlassCard class="p-6 flex flex-col justify-between">
+        <div>
+          <div class="text-purple-400 font-mono font-bold text-xs uppercase tracking-wider mb-2">Disponibilidad</div>
+          <h3 class="font-bold text-lg mb-1 font-['Space_Grotesk']">{es.contactPage.hoursCardTitle}</h3>
+          <p class="text-xs opacity-75 mb-2">{es.contactPage.hoursCardDesc}</p>
+        </div>
+        <div class="text-xs font-mono text-[#39FF14] pt-4 border-t border-[var(--card-dark-border)]">
+          {siteConfig.workingHours}
+        </div>
+      </GlassCard>
+
+    </div>
+
+    <!-- FORMULARIO (Netlify Forms) -->
+    <!-- Netlify Forms solo funciona en el sitio publicado en Netlify, no con npm run dev. -->
+    <div class="max-w-2xl mx-auto mb-20">
+      <GlassCard class="p-8 md:p-12">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-extrabold mb-2 font-['Space_Grotesk']">{es.contactPage.formTitle}</h2>
+          <p class="text-sm opacity-80">{es.contactPage.formSubtitle}</p>
+        </div>
+
+        <form 
+          id="contact-form"
+          name="contacto" 
+          method="POST" 
+          action="/gracias"
+          data-netlify="true" 
+          data-netlify-honeypot="bot-field"
+          class="space-y-6"
+        >
+          <!-- Hidden field for Netlify Forms -->
+          <input type="hidden" name="form-name" value="contacto" />
+
+          <!-- Honeypot anti-spam -->
+          <p class="hidden">
+            <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-xs font-mono uppercase tracking-wider mb-2 opacity-80 font-bold">{es.contactPage.nameLabel} *</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                required 
+                class="w-full px-4 py-3.5 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-base text-inherit focus:outline-none focus:border-[#00E5C3] transition-colors" 
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-xs font-mono uppercase tracking-wider mb-2 opacity-80 font-bold">{es.contactPage.phoneLabel} *</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                required 
+                class="w-full px-4 py-3.5 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-base text-inherit focus:outline-none focus:border-[#00E5C3] transition-colors" 
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label for="email" class="block text-xs font-mono uppercase tracking-wider mb-2 opacity-80 font-bold">{es.contactPage.emailLabel}</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="w-full px-4 py-3.5 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-base text-inherit focus:outline-none focus:border-[#00E5C3] transition-colors" 
+              />
+            </div>
+            <div>
+              <label for="businessType" class="block text-xs font-mono uppercase tracking-wider mb-2 opacity-80 font-bold">{es.contactPage.businessTypeLabel}</label>
+              <input 
+                type="text" 
+                id="businessType" 
+                name="businessType" 
+                class="w-full px-4 py-3.5 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-base text-inherit focus:outline-none focus:border-[#00E5C3] transition-colors" 
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="interest" class="block text-xs font-mono uppercase tracking-wider mb-2 opacity-80 font-bold">{es.contactPage.interestLabel}</label>
+            <select 
+              id="interest" 
+              name="interest" 
+              class="w-full px-4 py-3.5 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-base text-inherit focus:outline-none focus:border-[#00E5C3] transition-colors"
+            >
+              <option value="Carta digital">{es.contactPage.opt1}</option>
+              <option value="Landing page">{es.contactPage.opt2}</option>
+              <option value="Catálogo web">{es.contactPage.opt3}</option>
+              <option value="Tienda con WhatsApp">{es.contactPage.opt4}</option>
+              <option value="Aún no lo sé" selected>{es.contactPage.opt5}</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="block text-xs font-mono uppercase tracking-wider mb-2 opacity-80 font-bold">{es.contactPage.messageLabel}</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="4" 
+              class="w-full px-4 py-3.5 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-base text-inherit focus:outline-none focus:border-[#00E5C3] transition-colors"
+            ></textarea>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <input type="checkbox" id="consent" name="consent" required class="mt-1 w-4 h-4 rounded accent-[#39FF14]" />
+            <label for="consent" class="text-xs opacity-80">
+              {es.contactPage.consentLabel} <a href="/privacidad" class="text-[#00E5C3] underline hover:text-[#39FF14]">{es.contactPage.privacyLink}</a>.
+            </label>
+          </div>
+
+          <button 
+            type="submit" 
+            id="submit-btn"
+            class="w-full py-4 rounded-xl bg-[#39FF14] text-[#070B0A] font-bold text-base hover:bg-[#32e011] transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+          >
+            <span>{es.contactPage.submitBtn}</span>
+          </button>
+
+          <p class="text-center text-xs opacity-75 pt-4">
+            {es.contactPage.directWhatsAppNote}: <a href={whatsappUrl} class="text-[#25D366] font-bold hover:underline">WhatsApp</a>
+          </p>
+        </form>
+      </GlassCard>
+    </div>
+
+    <!-- PREGUNTAS FRECUENTES (Contacto) -->
+    <div class="max-w-3xl mx-auto mb-16">
+      <div class="text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 font-['Space_Grotesk']">
+          Preguntas sobre contacto
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        {contactFaqData.map((item, index) => {
+          const qText = getTranslation(`${item.qKey}.q`);
+          const aText = getTranslation(`${item.qKey}.a`);
+          const buttonId = `contact-faq-btn-${index}`;
+          const panelId = `contact-faq-panel-${index}`;
+
+          return (
+            <GlassCard class="p-0 overflow-hidden">
+              <h3>
+                <button 
+                  id={buttonId}
+                  type="button"
+                  class="w-full p-6 text-left font-bold text-base flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00E5C3]"
+                  aria-expanded="false"
+                  aria-controls={panelId}
+                >
+                  <span>{qText}</span>
+                  <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[#00E5C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+              </h3>
+              <div 
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                class="hidden px-6 pb-6 text-sm opacity-80 leading-relaxed border-t border-[var(--card-dark-border)] pt-4 mt-2"
+              >
+                <p>{aText}</p>
+              </div>
+            </GlassCard>
+          );
+        })}
+      </div>
+    </div>
+  </Section>
+
+  <CtaSection lang="es" />
+</Layout>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const paquete = urlParams.get('paquete');
+  const servicio = urlParams.get('servicio');
+  const interestSelect = document.getElementById('interest') as HTMLSelectElement;
+
+  if (interestSelect) {
+    if (paquete) {
+      const val = paquete.charAt(0).toUpperCase() + paquete.slice(1);
+      for (let opt of interestSelect.options) {
+        if (opt.value.toLowerCase().includes(val.toLowerCase())) {
+          opt.selected = true;
+          break;
+        }
+      }
+    } else if (servicio) {
+      const val = servicio.replace('-', ' ');
+      for (let opt of interestSelect.options) {
+        if (opt.value.toLowerCase().includes(val.toLowerCase())) {
+          opt.selected = true;
+          break;
+        }
+      }
+    }
+  }
+
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  form?.addEventListener('submit', () => {
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Enviando...</span>`;
+    }
+  });
+
+  document.querySelectorAll('button[aria-controls^="contact-faq-panel-"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const panelId = btn.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId!);
+      const icon = btn.querySelector('svg');
+
+      document.querySelectorAll('button[aria-controls^="contact-faq-panel-"]').forEach(otherBtn => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute('aria-expanded', 'false');
+          const otherPanelId = otherBtn.getAttribute('aria-controls');
+          document.getElementById(otherPanelId!)?.classList.add('hidden');
+          otherBtn.querySelector('svg')?.style.setProperty('transform', 'rotate(0deg)');
+        }
+      });
+
+      btn.setAttribute('aria-expanded', (!expanded).toString());
+      if (expanded) {
+        panel?.classList.add('hidden');
+        icon?.style.setProperty('transform', 'rotate(0deg)');
+      } else {
+        panel?.classList.remove('hidden');
+        icon?.style.setProperty('transform', 'rotate(180deg)');
+      }
+    });
+  });
+</script>

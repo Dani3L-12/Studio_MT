@@ -1,0 +1,91 @@
+---
+import GlassCard from './GlassCard.astro';
+import Button from './Button.astro';
+import type { DemoItem } from '../data/demos';
+
+interface Props {
+  demo: DemoItem;
+  lang?: 'es' | 'en';
+}
+
+const { demo, lang = 'es' } = Astro.props;
+const isEnglish = lang === 'en';
+const t = demo[lang];
+
+const prefix = isEnglish ? '/en' : '';
+const detailUrl = `${prefix}/demos/${demo.slug}`;
+const liveUrl = isEnglish ? `/en/live/${demo.slug}` : `/en-vivo/${demo.slug}`;
+
+const statusText = demo.status === 'live' 
+  ? (isEnglish ? 'Live Demo' : 'Demo disponible')
+  : (isEnglish ? 'Coming Soon' : 'Próximamente');
+---
+
+<GlassCard class="flex flex-col justify-between h-full group hover:border-[#00E5C3] transition-all duration-300">
+  <div>
+    <!-- HTML/CSS Thumbnail mockup -->
+    <div class="h-44 rounded-xl bg-gradient-to-br from-[#053B2A]/80 via-[#070B0A] to-[#00E5C3]/20 mb-4 p-4 flex flex-col justify-between border border-[var(--card-dark-border)] relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+      <div class={`absolute top-2 right-2 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold ${demo.status === 'live' ? 'bg-[#39FF14]/20 text-[#39FF14]' : 'bg-[var(--card-dark-bg)] text-[#00E5C3] border border-[var(--card-dark-border)]'}`}>
+        {statusText}
+      </div>
+      
+      <div class="flex items-center gap-1.5 opacity-60">
+        <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+      </div>
+
+      <div class="space-y-2">
+        {demo.thumbnailType === 'restaurant' && (
+          <div class="space-y-1 font-mono text-xs text-[#00E5C3]">
+            <div class="h-2 w-3/4 bg-[#00E5C3]/30 rounded"></div>
+            <div class="h-2 w-1/2 bg-[#39FF14]/30 rounded"></div>
+          </div>
+        )}
+        {demo.thumbnailType === 'catalog' && (
+          <div class="grid grid-cols-2 gap-2">
+            <div class="h-10 bg-[var(--card-dark-bg)] rounded border border-[var(--card-dark-border)]"></div>
+            <div class="h-10 bg-[var(--card-dark-bg)] rounded border border-[var(--card-dark-border)]"></div>
+          </div>
+        )}
+        {demo.thumbnailType === 'landing' && (
+          <div class="space-y-1.5">
+            <div class="h-3 w-full bg-white/20 rounded"></div>
+            <div class="h-2 w-2/3 bg-white/10 rounded"></div>
+          </div>
+        )}
+        {demo.thumbnailType === 'store' && (
+          <div class="flex items-center justify-between">
+            <div class="h-6 w-16 bg-[#39FF14]/30 rounded"></div>
+            <div class="h-6 w-6 rounded-full bg-[#39FF14] text-[#070B0A] flex items-center justify-center text-xs font-bold">🛒</div>
+          </div>
+        )}
+      </div>
+
+      <div class="flex items-center justify-between text-[11px] font-mono opacity-50 uppercase tracking-widest">
+        <span>Studio MG Demo</span>
+        <span class="capitalize">{demo.category}</span>
+      </div>
+    </div>
+
+    <!-- Category tag -->
+    <div class="text-xs font-mono text-[#00E5C3] uppercase tracking-wider mb-1 capitalize">
+      {demo.category}
+    </div>
+
+    <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{t.name}</h3>
+    <p class="text-xs sm:text-sm opacity-75 mb-6 leading-relaxed">{t.shortDesc}</p>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex items-center gap-3 pt-4 border-t border-[var(--card-dark-border)]">
+    <Button variant="secondary" href={detailUrl} class="w-full justify-center text-xs py-2.5">
+      {isEnglish ? 'View details' : 'Ver detalles'}
+    </Button>
+    {demo.status === 'live' && (
+      <Button variant="primary" href={liveUrl} class="w-full justify-center text-xs py-2.5">
+        {isEnglish ? 'Live demo' : 'Ver demo en vivo'}
+      </Button>
+    )}
+  </div>
+</GlassCard>

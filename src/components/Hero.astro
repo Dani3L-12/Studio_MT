@@ -1,0 +1,124 @@
+---
+import { siteConfig } from '../config/site.config';
+import { es } from '../i18n/es';
+import { en } from '../i18n/en';
+import Button from './Button.astro';
+import GlassCard from './GlassCard.astro';
+
+interface Props {
+  lang?: 'es' | 'en';
+}
+
+const { lang = 'es' } = Astro.props;
+const t = lang === 'en' ? en : es;
+const isEnglish = lang === 'en';
+const prefix = isEnglish ? '/en' : '';
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+---
+
+<section class="relative pt-24 pb-20 md:pt-36 md:pb-32 px-6 overflow-hidden text-center">
+  <div class="max-w-5xl mx-auto flex flex-col items-center">
+    
+    <!-- Top Glass Badge -->
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-mono font-semibold mb-8 shadow-sm">
+      <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-ping"></span>
+      <span class="text-[#00E5C3]">{t.hero.badge}</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.1] mb-6 font-['Space_Grotesk']">
+      {t.hero.title.split(' web ')[0]} <span class="bg-gradient-to-r from-[#39FF14] via-[#00E5C3] to-[#39FF14] bg-clip-text text-transparent">web</span> {t.hero.title.split(' web ')[1] || 'que venda'}
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-base sm:text-lg md:text-xl opacity-80 max-w-2xl font-normal leading-relaxed mb-10">
+      {t.hero.subtitle}
+    </p>
+
+    <!-- Two Centered Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mb-20">
+      <Button variant="primary" href={`${prefix}/demos`} class="w-full sm:w-auto text-base px-8 py-4">
+        {t.hero.ctaDemos}
+      </Button>
+      <Button variant="secondary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4">
+        {t.hero.ctaWhatsApp}
+      </Button>
+    </div>
+
+    <!-- CSS Mockup: Laptop and Phone in Glass with Mini Digital Menu -->
+    <div class="relative w-full max-w-4xl mx-auto mt-4">
+      <!-- Glow behind mockup -->
+      <div class="absolute inset-0 bg-gradient-to-r from-[#39FF14]/10 to-[#00E5C3]/10 rounded-3xl blur-2xl -z-10"></div>
+
+      <!-- Laptop Mockup -->
+      <div class="glass-card rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-2xl border border-[var(--card-dark-border)] animate-float">
+        <!-- Laptop screen top bar -->
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--card-dark-border)]">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="px-4 py-1 rounded-full bg-[var(--card-dark-bg)] text-xs font-mono opacity-85">
+            {t.hero.mockupTitle}
+          </div>
+          <div class="w-12"></div>
+        </div>
+
+        <!-- Laptop interior grid (Simulating digital menu website) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+          <div class="glass-card p-4 rounded-xl border border-[var(--card-dark-border)]">
+            <div class="h-24 rounded-lg bg-gradient-to-br from-[#053B2A] to-[#070B0A] mb-3 flex items-center justify-center font-mono text-xs text-[#00E5C3]">
+              [ 📸 Foto Plato ]
+            </div>
+            <h4 class="font-bold text-sm mb-1">{t.hero.mockupItem1}</h4>
+            <p class="text-xs opacity-75 mb-3">S/ 38.00 • Jugoso y tradicional</p>
+            <span class="inline-block px-3 py-1 rounded-lg bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono">
+              {t.hero.mockupBtn}
+            </span>
+          </div>
+
+          <div class="glass-card p-4 rounded-xl border border-[var(--card-dark-border)]">
+            <div class="h-24 rounded-lg bg-gradient-to-br from-[#00E5C3]/20 to-[#070B0A] mb-3 flex items-center justify-center font-mono text-xs text-[#39FF14]">
+              [ ☕ Foto Café ]
+            </div>
+            <h4 class="font-bold text-sm mb-1">{t.hero.mockupItem2}</h4>
+            <p class="text-xs opacity-75 mb-3">S/ 12.00 • Origen Quillabamba</p>
+            <span class="inline-block px-3 py-1 rounded-lg bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono">
+              {t.hero.mockupBtn}
+            </span>
+          </div>
+
+          <div class="glass-card p-4 rounded-xl border border-[var(--card-dark-border)] hidden md:block">
+            <div class="h-24 rounded-lg bg-gradient-to-br from-[#39FF14]/20 to-[#070B0A] mb-3 flex items-center justify-center font-mono text-xs text-[#00E5C3]">
+              [ 🐟 Foto Ceviche ]
+            </div>
+            <h4 class="font-bold text-sm mb-1">{t.hero.mockupItem3}</h4>
+            <p class="text-xs opacity-75 mb-3">S/ 45.00 • Trucha andina fresca</p>
+            <span class="inline-block px-3 py-1 rounded-lg bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono">
+              {t.hero.mockupBtn}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float {
+      animation: none;
+    }
+  }
+</style>
