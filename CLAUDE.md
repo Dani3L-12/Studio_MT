@@ -1,4 +1,4 @@
-## Development
+npm ## Development
 
 When starting the dev server, use background mode:
 

@@ -4,7 +4,7 @@ Sitio web multipágina (Español / Inglés) desarrollado con **Astro** y **Tailw
 
 ## 🚀 Requisitos Previos
 
-- **Node.js**: Versión 22.12.0 o superior recomendada.
+- **Node.js**: Versión 22.12.0 o superior recomendada.git init
 
 ## 📦 Instalación y Ejecución local
 
