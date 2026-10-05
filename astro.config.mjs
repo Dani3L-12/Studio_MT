@@ -7,6 +7,7 @@ import { siteConfig } from './src/config/site.config';
 // https://astro.build/config
 export default defineConfig({
   site: siteConfig.siteUrl,
+  base: '/Studio_MT', // <-- Añade esta línea con el nombre exacto de tu repositorio
   compressHTML: true,
   vite: {
     plugins: [tailwindcss()]
