@@ -14,26 +14,29 @@ const t = lang === 'en' ? en : es;
 const isEnglish = lang === 'en';
 
 const currentPath = Astro.url.pathname;
-const prefix = isEnglish ? '/en' : '';
+
+// Base URL del repositorio configurada en astro.config.mjs
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+const langPrefix = isEnglish ? `${baseUrl}/en` : baseUrl;
 
 // Helper to determine if nav link is active
 const isActive = (path: string) => {
+  const cleanPath = currentPath.replace(baseUrl, '');
   if (path === '/' || path === '/en' || path === '/en/') {
-    return currentPath === '/' || currentPath === '/en' || currentPath === '/en/';
+    return cleanPath === '/' || cleanPath === '/en' || cleanPath === '/en/';
   }
-  return currentPath.includes(path);
+  return cleanPath.includes(path);
 };
 
 // Toggle language path mapping
 const getToggleLangPath = () => {
+  const cleanPath = currentPath.replace(baseUrl, '');
   if (isEnglish) {
-    // switch to ES
-    let p = currentPath.replace(/^\/en/, '');
-    return p === '' ? '/' : p;
+    let p = cleanPath.replace(/^\/en/, '');
+    return `${baseUrl}${p === '' ? '/' : p}`;
   } else {
-    // switch to EN
-    let p = currentPath === '/' ? '' : currentPath;
-    return `/en${p}`;
+    let p = cleanPath === '/' ? '' : cleanPath;
+    return `${baseUrl}/en${p}`;
   }
 };
 
@@ -47,12 +50,12 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
 
     <!-- Desktop Navigation -->
     <nav class="hidden lg:flex items-center gap-6 font-medium text-sm">
-      <a href={`${prefix}/`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.home}</a>
-      <a href={`${prefix}/servicios`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/servicios') || isActive('/services') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.services}</a>
-      <a href={`${prefix}/demos`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/demos') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.demos}</a>
-      <a href={`${prefix}/paquetes`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/paquetes') || isActive('/packages') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.packages}</a>
-      <a href={`${prefix}/nosotros`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/nosotros') || isActive('/about') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.about}</a>
-      <a href={`${prefix}/contacto`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/contacto') || isActive('/contact') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.contact}</a>
+      <a href={`${langPrefix}/`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.home}</a>
+      <a href={`${langPrefix}/servicios`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/servicios') || isActive('/services') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.services}</a>
+      <a href={`${langPrefix}/demos`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/demos') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.demos}</a>
+      <a href={`${langPrefix}/paquetes`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/paquetes') || isActive('/packages') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.packages}</a>
+      <a href={`${langPrefix}/nosotros`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/nosotros') || isActive('/about') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.about}</a>
+      <a href={`${langPrefix}/contacto`} class={`transition-colors hover:text-[#00E5C3] ${isActive('/contacto') || isActive('/contact') ? 'text-[#00E5C3] font-bold border-b-2 border-[#00E5C3] pb-1' : ''}`}>{t.nav.contact}</a>
     </nav>
 
     <!-- Actions (Lang Switcher, Theme Toggle, WhatsApp CTA, Mobile Menu Button) -->
@@ -127,12 +130,12 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
     </div>
 
     <nav class="flex flex-col items-center gap-6 text-xl font-bold font-['Space_Grotesk']">
-      <a href={`${prefix}/`} class="hover:text-[#00E5C3] transition-colors">{t.nav.home}</a>
-      <a href={`${prefix}/servicios`} class="hover:text-[#00E5C3] transition-colors">{t.nav.services}</a>
-      <a href={`${prefix}/demos`} class="hover:text-[#00E5C3] transition-colors">{t.nav.demos}</a>
-      <a href={`${prefix}/paquetes`} class="hover:text-[#00E5C3] transition-colors">{t.nav.packages}</a>
-      <a href={`${prefix}/nosotros`} class="hover:text-[#00E5C3] transition-colors">{t.nav.about}</a>
-      <a href={`${prefix}/contacto`} class="hover:text-[#00E5C3] transition-colors">{t.nav.contact}</a>
+      <a href={`${langPrefix}/`} class="hover:text-[#00E5C3] transition-colors">{t.nav.home}</a>
+      <a href={`${langPrefix}/servicios`} class="hover:text-[#00E5C3] transition-colors">{t.nav.services}</a>
+      <a href={`${langPrefix}/demos`} class="hover:text-[#00E5C3] transition-colors">{t.nav.demos}</a>
+      <a href={`${langPrefix}/paquetes`} class="hover:text-[#00E5C3] transition-colors">{t.nav.packages}</a>
+      <a href={`${langPrefix}/nosotros`} class="hover:text-[#00E5C3] transition-colors">{t.nav.about}</a>
+      <a href={`${langPrefix}/contacto`} class="hover:text-[#00E5C3] transition-colors">{t.nav.contact}</a>
     </nav>
 
     <div class="flex flex-col gap-4">
