@@ -1,18 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import BenefitsBar from '../components/BenefitsBar.astro';
 import Section from '../components/Section.astro';
 import ServiceCard from '../components/ServiceCard.astro';
-import DemoCard from '../components/DemoCard.astro';
 import Button from '../components/Button.astro';
 import GlassCard from '../components/GlassCard.astro';
-import ProcessSection from '../components/ProcessSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import CtaSection from '../components/CtaSection.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { packagesData } from '../data/packages';
-import { demosData } from '../data/demos';
 import { faqData } from '../data/faq';
 import { siteConfig } from '../config/site.config';
 import { es } from '../i18n/es';
@@ -69,7 +65,6 @@ const faqSchema = {
   <JsonLd schema={[orgSchema, faqSchema]} />
 
   <Hero lang="es" />
-  <BenefitsBar lang="es" />
 
   <!-- SECCIÓN SERVICIOS (resumen) -->
   <Section title={es.homeServices.title} subtitle={es.homeServices.subtitle}>
@@ -81,18 +76,6 @@ const faqSchema = {
     </div>
     <div class="text-center">
       <Button variant="secondary" href="/servicios">{es.homeServices.cta}</Button>
-    </div>
-  </Section>
-
-  <!-- SECCIÓN DEMOS DESTACADAS (resumen) -->
-  <Section title={es.homeDemos.title} subtitle={es.homeDemos.subtitle}>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-      {demosData.map((demo) => (
-        <DemoCard demo={demo} lang="es" />
-      ))}
-    </div>
-    <div class="text-center">
-      <Button variant="secondary" href="/demos">{es.homeDemos.cta}</Button>
     </div>
   </Section>
 
@@ -140,7 +123,6 @@ const faqSchema = {
     </div>
   </Section>
 
-  <ProcessSection lang="es" />
   <FaqSection lang="es" />
   <CtaSection lang="es" />
 </Layout>

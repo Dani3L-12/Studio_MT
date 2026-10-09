@@ -4,6 +4,13 @@ import { es } from '../i18n/es';
 import { en } from '../i18n/en';
 import Button from './Button.astro';
 import GlassCard from './GlassCard.astro';
+import { Image } from 'astro:assets';
+import fondoImg from '../assets/Fondo3.webp';
+import gymImg from '../assets/Gimnasio.webp';
+import pasteleriaImg from '../assets/PASTELERIA.webp';
+import barberiaImg from '../assets/BARBERIA.webp';
+import hotelImg from '../assets/HOTEL.webp';
+import restauranteImg from '../assets/Restaurante.webp';
 
 interface Props {
   lang?: 'es' | 'en';
@@ -15,109 +22,224 @@ const isEnglish = lang === 'en';
 const prefix = isEnglish ? '/en' : '';
 
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+
+const projects: Array<{ title: string; category: string; gradient: string; icon: string; image?: typeof gymImg }> = [
+  {
+    title: isEnglish ? "Andean Restaurant" : "Restaurante Andino",
+    category: "Carta Digital • QR",
+    gradient: "from-[#053B2A] via-[#070B0A] to-[#00E5C3]/30",
+    icon: "🍲",
+    image: restauranteImg
+  },
+  {
+    title: isEnglish ? "Specialty Coffee" : "Café de Especialidad",
+    category: "Cafetería & Pastelería",
+    gradient: "from-[#00E5C3]/30 via-[#070B0A] to-[#053B2A]",
+    icon: "☕",
+    image: pasteleriaImg
+  },
+  {
+    title: isEnglish ? "Modern Barbershop" : "Barbería & Estilo",
+    category: "Landing Page",
+    gradient: "from-[#053B2A] via-[#070B0A] to-[#39FF14]/20",
+    icon: "✂️",
+    image: barberiaImg
+  },
+  {
+    title: isEnglish ? "Cusco Boutique Hotel" : "Hotel Boutique Cusco",
+    category: "Reservas & Web",
+    gradient: "from-[#00E5C3]/20 via-[#070B0A] to-[#39FF14]/15",
+    icon: "🏨",
+    image: hotelImg
+  },
+  {
+    title: isEnglish ? "Andean Power Gym" : "Gimnasio Andino Power",
+    category: isEnglish ? "Gym & Fitness" : "Gimnasio & Fitness",
+    gradient: "from-[#39FF14]/25 via-[#070B0A] to-[#00E5C3]/25",
+    icon: "🏋️",
+    image: gymImg
+  }
+];
+
+const marqueeProjects = [...projects, ...projects];
 ---
 
-<section class="relative pt-24 pb-20 md:pt-36 md:pb-32 px-6 overflow-hidden text-center">
-  <div class="max-w-5xl mx-auto flex flex-col items-center">
-    
-    <!-- Top Glass Badge -->
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-mono font-semibold mb-8 shadow-sm">
-      <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-ping"></span>
-      <span class="text-[#00E5C3]">{t.hero.badge}</span>
+<section class="relative pt-2 pb-16 md:pt-2 md:pb-28 overflow-hidden text-left">
+  
+  <!-- Full-Bleed Cover Banner with Fondo3.jpg and Soft-Edge 4-Side Blend Mask -->
+  <div class="relative w-full py-20 md:py-32 px-6 md:px-16 mb-20 overflow-hidden text-left">
+    <!-- Background Image (decorative: full-bleed, soft-edge mask, focal point biased right to keep QR/phone visible on mobile) -->
+    <div class="absolute inset-0 -z-20 overflow-hidden soft-mask" aria-hidden="true">
+      <Image 
+        src={fondoImg} 
+        alt="" 
+        class="w-full h-full object-cover object-[72%_center] md:object-center filter brightness-90 contrast-105 scale-105"
+        loading="eager"
+        fetchpriority="high"
+        widths={[640, 1024, 1600]}
+        sizes="100vw"
+      />
     </div>
+    <!-- Dark Gradient Overlay for text contrast (slightly stronger on right to mute baked-in English UI text) -->
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-[#070B0A]/95 via-[#070B0A]/75 to-[#070B0A]/55 backdrop-blur-[1px]"></div>
+    <!-- Bottom black fade to avoid abrupt image cut -->
+    <div class="absolute bottom-0 left-0 right-0 h-40 md:h-56 -z-10 bg-gradient-to-b from-transparent via-[#070B0A]/70 to-[#070B0A] pointer-events-none" aria-hidden="true"></div>
 
-    <!-- Headline -->
-    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.1] mb-6 font-['Space_Grotesk']">
-      {t.hero.title.split(' web ')[0]} <span class="bg-gradient-to-r from-[#39FF14] via-[#00E5C3] to-[#39FF14] bg-clip-text text-transparent">web</span> {t.hero.title.split(' web ')[1] || 'que venda'}
-    </h1>
-
-    <!-- Subtitle -->
-    <p class="text-base sm:text-lg md:text-xl opacity-80 max-w-2xl font-normal leading-relaxed mb-10">
-      {t.hero.subtitle}
-    </p>
-
-    <!-- Two Centered Buttons -->
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md mb-20">
-      <Button variant="primary" href={`${prefix}/demos`} class="w-full sm:w-auto text-base px-8 py-4">
-        {t.hero.ctaDemos}
-      </Button>
-      <Button variant="secondary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4">
-        {t.hero.ctaWhatsApp}
-      </Button>
-    </div>
-
-    <!-- CSS Mockup: Laptop and Phone in Glass with Mini Digital Menu -->
-    <div class="relative w-full max-w-4xl mx-auto mt-4">
-      <!-- Glow behind mockup -->
-      <div class="absolute inset-0 bg-gradient-to-r from-[#39FF14]/10 to-[#00E5C3]/10 rounded-3xl blur-2xl -z-10"></div>
-
-      <!-- Laptop Mockup -->
-      <div class="glass-card rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-2xl border border-[var(--card-dark-border)] animate-float">
-        <!-- Laptop screen top bar -->
-        <div class="flex items-center justify-between pb-4 mb-4 border-b border-[var(--card-dark-border)]">
-          <div class="flex items-center gap-2">
-            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
-          </div>
-          <div class="px-4 py-1 rounded-full bg-[var(--card-dark-bg)] text-xs font-mono opacity-85">
-            {t.hero.mockupTitle}
-          </div>
-          <div class="w-12"></div>
+    <!-- Content (aligned with site margins) -->
+    <div class="max-w-7xl mx-auto flex flex-col items-start relative z-10">
+      <div class="max-w-3xl">
+        
+        <!-- Top Glass Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-mono font-semibold mb-6 shadow-sm border border-[#00E5C3]/30">
+          <span class="w-2 h-2 rounded-full bg-[#39FF14] animate-ping"></span>
+          <span class="text-[#00E5C3]">{t.hero.badge}</span>
         </div>
 
-        <!-- Laptop interior grid (Simulating digital menu website) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-          <div class="glass-card p-4 rounded-xl border border-[var(--card-dark-border)]">
-            <div class="h-24 rounded-lg bg-gradient-to-br from-[#053B2A] to-[#070B0A] mb-3 flex items-center justify-center font-mono text-xs text-[#00E5C3]">
-              [ 📸 Foto Plato ]
-            </div>
-            <h4 class="font-bold text-sm mb-1">{t.hero.mockupItem1}</h4>
-            <p class="text-xs opacity-75 mb-3">S/ 38.00 • Jugoso y tradicional</p>
-            <span class="inline-block px-3 py-1 rounded-lg bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono">
-              {t.hero.mockupBtn}
-            </span>
-          </div>
+        <!-- Headline -->
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6 font-['Space_Grotesk'] text-left text-white drop-shadow-lg">
+          {t.hero.title.split(' web ')[0]} <span class="bg-gradient-to-r from-[#39FF14] via-[#00E5C3] to-[#39FF14] bg-clip-text text-transparent">web</span> {t.hero.title.split(' web ')[1] || 'que venda'}
+        </h1>
 
-          <div class="glass-card p-4 rounded-xl border border-[var(--card-dark-border)]">
-            <div class="h-24 rounded-lg bg-gradient-to-br from-[#00E5C3]/20 to-[#070B0A] mb-3 flex items-center justify-center font-mono text-xs text-[#39FF14]">
-              [ ☕ Foto Café ]
-            </div>
-            <h4 class="font-bold text-sm mb-1">{t.hero.mockupItem2}</h4>
-            <p class="text-xs opacity-75 mb-3">S/ 12.00 • Origen Quillabamba</p>
-            <span class="inline-block px-3 py-1 rounded-lg bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono">
-              {t.hero.mockupBtn}
-            </span>
-          </div>
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg md:text-xl opacity-95 max-w-xl font-normal leading-relaxed mb-8 text-left text-zinc-100 drop-shadow">
+          {t.hero.subtitle}
+        </p>
 
-          <div class="glass-card p-4 rounded-xl border border-[var(--card-dark-border)] hidden md:block">
-            <div class="h-24 rounded-lg bg-gradient-to-br from-[#39FF14]/20 to-[#070B0A] mb-3 flex items-center justify-center font-mono text-xs text-[#00E5C3]">
-              [ 🐟 Foto Ceviche ]
-            </div>
-            <h4 class="font-bold text-sm mb-1">{t.hero.mockupItem3}</h4>
-            <p class="text-xs opacity-75 mb-3">S/ 45.00 • Trucha andina fresca</p>
-            <span class="inline-block px-3 py-1 rounded-lg bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono">
-              {t.hero.mockupBtn}
-            </span>
-          </div>
+        <!-- Two Buttons -->
+        <div class="flex flex-col sm:flex-row items-start gap-4 w-full max-w-md">
+          <Button variant="primary" href={`${prefix}/demos`} class="w-full sm:w-auto text-base px-8 py-4 shadow-[0_0_25px_rgba(57,255,20,0.3)]">
+            {t.hero.ctaDemos}
+          </Button>
+          <Button variant="secondary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4 backdrop-blur-md bg-white/10 text-white border-white/20 hover:bg-white/20">
+            {t.hero.ctaWhatsApp}
+          </Button>
         </div>
+
       </div>
-
     </div>
-
   </div>
+
+  <!-- Infinite Marquee Showcase of Projects (Below the full-bleed cover banner) -->
+  <div class="relative w-full max-w-7xl mx-auto px-6 md:px-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+    <!-- Glow behind marquee -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#39FF14]/10 to-[#00E5C3]/10 rounded-3xl blur-3xl -z-10"></div>
+
+      <div class="flex w-max animate-marquee gap-6 py-4">
+        {marqueeProjects.map((proj, index) => (
+          <div class="shrink-0 w-[280px] sm:w-[320px] h-[420px] sm:h-[460px] rounded-3xl glass-card p-4 border border-[var(--card-dark-border)] shadow-2xl flex flex-col justify-between text-left relative overflow-hidden group hover:border-[#00E5C3] transition-all duration-300">
+          {/* Top badge (hidden on photo cards to keep screenshot clean) */}
+          {!proj.image && (
+            <div class="flex items-center justify-between z-10">
+              <div class="px-3 py-1 rounded-full bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-[10px] font-mono font-bold flex items-center gap-1.5 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-[#39FF14]"></span>
+                mg. project
+              </div>
+              <span class="text-[10px] font-mono opacity-50">#{index + 1}</span>
+            </div>
+          )}
+
+          <!-- Background Gradient / Thumbnail (real photo when available) -->
+          {proj.image ? (
+            <div class="absolute inset-0 z-0 overflow-hidden">
+              <Image
+                src={proj.image}
+                alt={proj.title}
+                class="pan-image w-full h-full object-cover object-top"
+                widths={[320, 640]}
+                sizes="320px"
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div class={`absolute inset-0 bg-gradient-to-br ${proj.gradient} opacity-50 group-hover:opacity-75 transition-opacity z-0 flex items-center justify-center`}>
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,229,195,0.1)_0%,transparent_70%)]"></div>
+            </div>
+          )}
+
+          {!proj.image && (
+            <div class="relative z-10 my-auto text-center space-y-2">
+              <div class="w-14 h-14 rounded-2xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] mx-auto flex items-center justify-center text-2xl shadow-lg">
+                {proj.icon}
+              </div>
+            </div>
+          )}
+
+          {/* Bottom info (hidden on photo cards to keep screenshot clean) */}
+          {!proj.image && (
+            <div class="relative z-10 glass-card p-3 rounded-2xl border border-[var(--card-dark-border)] bg-[var(--card-dark-bg)] backdrop-blur-md space-y-1">
+              <div class="text-[10px] font-mono text-[#00E5C3] uppercase tracking-wider">{proj.category}</div>
+              <h4 class="font-bold text-sm font-['Space_Grotesk'] leading-tight">{proj.title}</h4>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+
 </section>
 
 <style>
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
+  .soft-mask {
+    /* High-quality soft-edge blend mask using radial gradient for ethereal 4-side fade */
+    -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, 
+      black 0%, 
+      black 40%, 
+      rgba(0,0,0,0.95) 55%, 
+      rgba(0,0,0,0.8) 65%, 
+      rgba(0,0,0,0.5) 75%, 
+      rgba(0,0,0,0.2) 85%, 
+      transparent 100%
+    );
+    mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, 
+      black 0%, 
+      black 40%, 
+      rgba(0,0,0,0.95) 55%, 
+      rgba(0,0,0,0.8) 65%, 
+      rgba(0,0,0,0.5) 75%, 
+      rgba(0,0,0,0.2) 85%, 
+      transparent 100%
+    );
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: cover;
+    mask-size: cover;
   }
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
   }
+
+  .animate-marquee {
+    animation: marquee 35s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  /* Pan-scroll preview: static at top, on hover scrolls down then returns smoothly */
+  .pan-image {
+    object-position: center top;
+  }
+  .group:hover .pan-image {
+    animation: panDownUp 9s ease-in-out infinite;
+  }
+  @keyframes panDownUp {
+    0% { object-position: center top; }
+    40% { object-position: center bottom; }
+    55% { object-position: center bottom; }
+    95% { object-position: center top; }
+    100% { object-position: center top; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .animate-float {
+    .animate-marquee {
+      animation: none;
+    }
+    .group:hover .pan-image {
       animation: none;
     }
   }
