@@ -9,14 +9,14 @@ import { es } from '../i18n/es';
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
 ---
 
-<Layout lang="es" title={es.contactPage.thanksTitle} description={es.contactPage.thanksSubtitle}>
+<Layout title={es.contactPage.thanksTitle} description={es.contactPage.thanksSubtitle}>
   <head slot="head">
     <meta name="robots" content="noindex" />
   </head>
 
   <Section class="text-center py-32">
     <GlassCard class="max-w-lg mx-auto p-10 space-y-6">
-      <div class="w-16 h-16 rounded-full bg-[#39FF14]/20 text-[#39FF14] flex items-center justify-center text-3xl mx-auto mb-4">
+      <div class="w-16 h-16 rounded-full bg-[var(--brand-soft)] text-[var(--brand-fg)] flex items-center justify-center text-3xl mx-auto mb-4">
         ✓
       </div>
       <h1 class="text-3xl font-extrabold font-['Space_Grotesk']">{es.contactPage.thanksTitle}</h1>

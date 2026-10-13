@@ -12,12 +12,19 @@
   :root {
     --bg-dark: #070B0A;
     --bg-light: #F4FBF8;
-    --neon-green: #39FF14;
-    --turquoise: #00E5C3;
     --deep-green: #053B2A;
+
+    /* Acento único de marca (verde lima #39FF14).
+       --brand-fg es la versión de frente: lima puro en oscuro,
+       oscurecido en claro para contraste AA. */
+    --brand: #39FF14;
+    --brand-fg: #39FF14;
+    --brand-soft: rgba(57, 255, 20, 0.12);
+    --brand-glow: rgba(57, 255, 20, 0.25);
+    --brand-border: rgba(57, 255, 20, 0.35);
     
     --card-dark-bg: rgba(7, 11, 10, 0.75);
-    --card-dark-border: rgba(0, 229, 195, 0.2);
+    --card-dark-border: rgba(57, 255, 20, 0.2);
     --card-light-bg: rgba(255, 255, 255, 0.85);
     --card-light-border: rgba(5, 59, 42, 0.15);
   }
@@ -30,6 +37,9 @@
   html:not(.dark) {
     background-color: var(--bg-light);
     color: #0A1410;
+    --brand-fg: #0d8a06;
+    --brand-soft: rgba(13, 138, 6, 0.1);
+    --brand-border: rgba(13, 138, 6, 0.45);
   }
 
   body {
@@ -41,9 +51,9 @@
     font-family: 'Space Grotesk', sans-serif;
   }
 
-  /* Accessible focus ring */
+  /* Accessible focus ring (acento de marca) */
   a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-    outline: 2px solid var(--turquoise);
+    outline: 2px solid var(--brand-fg);
     outline-offset: 2px;
   }
 }
@@ -66,7 +76,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 229, 195, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.4), transparent);
 }
 
 html:not(.dark) .glass-card {
@@ -77,6 +87,60 @@ html:not(.dark) .glass-card {
 
 html:not(.dark) .glass-card::before {
   background: linear-gradient(90deg, transparent, rgba(5, 59, 42, 0.2), transparent);
+}
+
+/* Pricing cards (inicio): acento único verde lima */
+.pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 1rem;
+  padding: 2rem;
+  background: var(--card-dark-bg);
+  border: 1px solid var(--brand-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Degradado interno sutil: un poco más claro arriba */
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.06), transparent 45%);
+  pointer-events: none;
+}
+
+html:not(.dark) .pricing-card {
+  background: var(--card-light-bg);
+  box-shadow: 0 8px 32px 0 rgba(5, 59, 42, 0.08);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--brand-fg);
+  box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.35), 0 0 28px var(--brand-glow);
+}
+
+/* Tarjeta destacada: borde lima visible + glow suave */
+.pricing-card-popular {
+  border: 1.5px solid var(--brand-fg);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), 0 0 36px var(--brand-glow);
+  z-index: 1;
+}
+
+/* ~7% más grande solo en desktop; en móvil solo borde + glow */
+@media (min-width: 768px) {
+  .pricing-card-popular {
+    transform: scale(1.07);
+  }
+  .pricing-card-popular:hover {
+    transform: scale(1.07) translateY(-5px);
+  }
 }
 
 /* Background light spots (optimized, lighter blur) */
@@ -95,7 +159,7 @@ html:not(.dark) .glass-card::before {
   width: 40vw;
   height: 40vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(57, 255, 20, 0.06) 0%, rgba(0, 229, 195, 0.02) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.06) 0%, rgba(57, 255, 20, 0.02) 50%, transparent 70%);
   filter: blur(40px);
 }
 
@@ -106,20 +170,24 @@ html:not(.dark) .glass-card::before {
   width: 40vw;
   height: 40vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 229, 195, 0.05) 0%, rgba(5, 59, 42, 0.03) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.05) 0%, rgba(5, 59, 42, 0.03) 50%, transparent 70%);
   filter: blur(40px);
 }
 
 html:not(.dark) .spot-1 {
-  background: radial-gradient(circle, rgba(0, 229, 195, 0.08) 0%, rgba(57, 255, 20, 0.03) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.08) 0%, rgba(57, 255, 20, 0.03) 50%, transparent 70%);
 }
 
 html:not(.dark) .spot-2 {
-  background: radial-gradient(circle, rgba(5, 59, 42, 0.05) 0%, rgba(0, 229, 195, 0.05) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(5, 59, 42, 0.05) 0%, rgba(57, 255, 20, 0.05) 50%, transparent 70%);
 }
 
 @media (max-width: 768px) {
   .glass-card {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .pricing-card {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }

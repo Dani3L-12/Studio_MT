@@ -28,7 +28,7 @@ const alwaysIncludedList = [
 ];
 ---
 
-<Layout lang="es" title={es.pages.services.title} description={es.pages.services.subtitle}>
+<Layout title={es.pages.services.title} description={es.pages.services.subtitle}>
   <PageHeader title={es.servicesPage.headerTitle} subtitle={es.servicesPage.headerSubtitle} />
 
   <!-- DETALLE DE CADA SERVICIO -->
@@ -48,7 +48,7 @@ const alwaysIncludedList = [
             includes={includes}
             iconSvg={svc.iconSvg}
             serviceName={title}
-            lang="es"
+           
           />
         );
       })}
@@ -66,7 +66,7 @@ const alwaysIncludedList = [
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {alwaysIncludedList.map((item, idx) => (
           <GlassCard class="p-6 flex flex-col items-start text-left">
-            <div class="w-10 h-10 rounded-xl bg-[#39FF14]/10 text-[#39FF14] flex items-center justify-center font-mono font-bold text-sm mb-4">
+            <div class="w-10 h-10 rounded-xl bg-[var(--brand-soft)] text-[var(--brand-fg)] flex items-center justify-center font-mono font-bold text-sm mb-4">
               0{idx + 1}
             </div>
             <h3 class="font-bold text-base mb-1 font-['Space_Grotesk']">{item.title}</h3>
@@ -77,6 +77,6 @@ const alwaysIncludedList = [
     </div>
   </Section>
 
-  <ProcessSection lang="es" />
-  <CtaSection lang="es" />
+  <ProcessSection />
+  <CtaSection />
 </Layout>

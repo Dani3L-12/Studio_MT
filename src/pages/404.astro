@@ -10,17 +10,17 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
 const base = import.meta.env.BASE_URL;
 ---
 
-<Layout lang="es" title={es.pages.notFound.title} description={es.pages.notFound.subtitle} noindex={true}>
+<Layout title={es.pages.notFound.title} description={es.pages.notFound.subtitle} noindex={true}>
   <Section class="text-center py-24">
     <GlassCard class="max-w-xl mx-auto p-10 md:p-14 space-y-6">
-      <div class="text-7xl font-extrabold font-mono text-[#39FF14]">404</div>
+      <div class="text-7xl font-extrabold font-mono text-[var(--brand-fg)]">404</div>
       <h1 class="text-3xl font-bold font-['Space_Grotesk']">{es.pages.notFound.title}</h1>
       <p class="text-sm md:text-base opacity-80 leading-relaxed max-w-md mx-auto">{es.pages.notFound.subtitle}</p>
       
       <div class="flex flex-wrap items-center justify-center gap-3 pt-4 font-mono text-xs font-bold">
-        <a href={`${base}servicios`} class="px-4 py-2 rounded-xl glass-card hover:border-[#00E5C3]">Servicios</a>
-        <a href={`${base}demos`} class="px-4 py-2 rounded-xl glass-card hover:border-[#00E5C3]">Demos</a>
-        <a href={`${base}contacto`} class="px-4 py-2 rounded-xl glass-card hover:border-[#00E5C3]">Contacto</a>
+        <a href={`${base}servicios`} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Servicios</a>
+        <a href={`${base}demos`} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Demos</a>
+        <a href={`${base}contacto`} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Contacto</a>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-4 pt-6">

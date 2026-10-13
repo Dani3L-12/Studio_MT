@@ -78,7 +78,7 @@ const pricingFaqSchema = {
 };
 ---
 
-<Layout lang="es" title={es.pages.packages.title} description={es.pages.packages.subtitle}>
+<Layout title={es.pages.packages.title} description={es.pages.packages.subtitle}>
   <JsonLd schema={[...serviceSchemas, pricingFaqSchema]} />
 
   <PageHeader title={es.packagesPage.headerTitle} subtitle={es.packagesPage.headerSubtitle} />
@@ -95,10 +95,10 @@ const pricingFaqSchema = {
         const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hola Daniel, me interesa cotizar el paquete ${name} (${pkg.price}).`)}`;
 
         return (
-          <GlassCard class={`flex flex-col justify-between h-full ${pkg.popular ? 'border-[#39FF14] bg-gradient-to-b from-[#39FF14]/15 to-[var(--card-dark-bg)] shadow-[0_0_30px_rgba(57,255,20,0.15)]' : ''}`}>
+           <GlassCard class={`flex flex-col justify-between h-full ${pkg.popular ? 'border-[var(--brand-fg)] bg-gradient-to-b from-[var(--brand-soft)] to-[var(--card-dark-bg)] shadow-[0_0_30px_var(--brand-glow)]' : ''}`}>
             <div>
               {pkg.popular && (
-                <div class="inline-block px-3 py-1 rounded-full bg-[#39FF14] text-[#070B0A] text-xs font-bold font-mono mb-4">
+                <div class="inline-block px-3 py-1 rounded-full bg-[var(--brand)] text-[#070B0A] text-xs font-bold font-mono mb-4">
                   {es.homePackages.mostPopular}
                 </div>
               )}
@@ -109,8 +109,8 @@ const pricingFaqSchema = {
               <p class="text-xs sm:text-sm opacity-80 mb-6 leading-relaxed">{desc}</p>
               
               <div class="space-y-2 mb-6 p-3 rounded-xl bg-[var(--card-dark-bg)] border border-[var(--card-dark-border)] text-xs font-mono">
-                <div>⏱️ {es.packagesPage.deliveryLabel} <span class="text-[#00E5C3] font-bold">{delivery}</span></div>
-                <div>🔄 {es.packagesPage.revisionsLabel} <span class="text-[#39FF14] font-bold">{revisions}</span></div>
+                <div>⏱️ {es.packagesPage.deliveryLabel} <span class="text-[var(--brand-fg)] font-bold">{delivery}</span></div>
+                <div>🔄 {es.packagesPage.revisionsLabel} <span class="text-[var(--brand-fg)] font-bold">{revisions}</span></div>
               </div>
 
               <ul class="space-y-3 text-xs sm:text-sm opacity-90 mb-8">
@@ -142,8 +142,8 @@ const pricingFaqSchema = {
             <tr class="border-b border-[var(--card-dark-border)] bg-[var(--card-dark-bg)] font-['Space_Grotesk']">
               <th scope="col" class="p-4 sm:p-5 font-bold">{es.packagesPage.colFeature}</th>
               <th scope="col" class="p-4 sm:p-5 font-bold text-center">{es.packagesPage.colEssential}</th>
-              <th scope="col" class="p-4 sm:p-5 font-bold text-center text-[#39FF14]">{es.packagesPage.colProfessional}</th>
-              <th scope="col" class="p-4 sm:p-5 font-bold text-center text-[#00E5C3]">{es.packagesPage.colPremium}</th>
+              <th scope="col" class="p-4 sm:p-5 font-bold text-center text-[var(--brand-fg)]">{es.packagesPage.colProfessional}</th>
+              <th scope="col" class="p-4 sm:p-5 font-bold text-center text-[var(--brand-fg)]">{es.packagesPage.colPremium}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-[var(--card-dark-border)] opacity-90 font-mono">
@@ -162,8 +162,8 @@ const pricingFaqSchema = {
 
     <!-- PLAN DE SOPORTE -->
     <div class="max-w-3xl mx-auto mb-20">
-      <GlassCard class="p-8 md:p-10 text-center border-[#00E5C3]/40 bg-gradient-to-br from-[#00E5C3]/10 to-[var(--card-dark-bg)]">
-        <span class="text-xs font-mono uppercase tracking-widest text-[#00E5C3] font-bold block mb-2">{es.packagesPage.supportTitle}</span>
+      <GlassCard class="p-8 md:p-10 text-center border-[var(--brand-border)] bg-gradient-to-br from-[var(--brand-soft)] to-[var(--card-dark-bg)]">
+        <span class="text-xs font-mono uppercase tracking-widest text-[var(--brand-fg)] font-bold block mb-2">{es.packagesPage.supportTitle}</span>
         <h3 class="text-2xl md:text-3xl font-extrabold font-['Space_Grotesk'] mb-4">{es.packagesPage.supportPrice}</h3>
         <p class="text-sm md:text-base opacity-80 leading-relaxed mb-6">{es.packagesPage.supportDesc}</p>
         <span class="inline-block px-4 py-1.5 rounded-full bg-[var(--card-dark-bg)] text-xs font-mono opacity-75 border border-[var(--card-dark-border)]">
@@ -188,7 +188,7 @@ const pricingFaqSchema = {
               <h3 class="font-bold text-base mb-2 font-['Space_Grotesk']">{extra.title}</h3>
               <p class="text-xs opacity-75 mb-4">{extra.desc}</p>
             </div>
-            <div class="text-xs font-mono font-bold text-[#39FF14] pt-4 border-t border-[var(--card-dark-border)]">
+            <div class="text-xs font-mono font-bold text-[var(--brand-fg)] pt-4 border-t border-[var(--card-dark-border)]">
               {extra.price}
             </div>
           </GlassCard>
@@ -208,7 +208,7 @@ const pricingFaqSchema = {
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {workTermsList.map((term, i) => (
           <GlassCard class="p-6 flex items-start gap-4">
-            <div class="w-10 h-10 rounded-xl bg-[#00E5C3]/10 text-[#00E5C3] flex items-center justify-center font-mono font-bold shrink-0">
+            <div class="w-10 h-10 rounded-xl bg-[var(--brand-soft)] text-[var(--brand-fg)] flex items-center justify-center font-mono font-bold shrink-0">
               0{i + 1}
             </div>
             <div>
@@ -242,12 +242,12 @@ const pricingFaqSchema = {
                 <button 
                   id={buttonId}
                   type="button"
-                  class="w-full p-6 text-left font-bold text-base flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00E5C3]"
+                  class="w-full p-6 text-left font-bold text-base flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--brand-fg)]"
                   aria-expanded="false"
                   aria-controls={panelId}
                 >
                   <span>{qText}</span>
-                  <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[#00E5C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[var(--brand-fg)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                   </svg>
                 </button>
@@ -267,7 +267,7 @@ const pricingFaqSchema = {
     </div>
   </Section>
 
-  <CtaSection lang="es" />
+  <CtaSection />
 </Layout>
 
 <script>

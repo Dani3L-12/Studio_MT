@@ -3,14 +3,8 @@ import Section from './Section.astro';
 import GlassCard from './GlassCard.astro';
 import { faqData } from '../data/faq';
 import { es } from '../i18n/es';
-import { en } from '../i18n/en';
 
-interface Props {
-  lang?: 'es' | 'en';
-}
-
-const { lang = 'es' } = Astro.props;
-const t = lang === 'en' ? en : es;
+const t = es;
 
 const getTranslation = (key: string) => {
   const keys = key.split('.');
@@ -36,12 +30,12 @@ const getTranslation = (key: string) => {
             <button 
               id={buttonId}
               type="button"
-              class="w-full p-6 text-left font-bold text-base md:text-lg flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00E5C3]"
+              class="w-full p-6 text-left font-bold text-base md:text-lg flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--brand-fg)]"
               aria-expanded="false"
               aria-controls={panelId}
             >
               <span>{qText}</span>
-              <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[#00E5C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[var(--brand-fg)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>

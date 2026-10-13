@@ -1,6 +1,6 @@
 # Studio MG — Sitios Web Profesionales en Cusco
 
-Sitio web multipágina (Español / Inglés) desarrollado con **Astro** y **Tailwind CSS**, optimizado para el rendimiento, accesibilidad (WCAG AA), y adaptado para negocios locales (restaurantes, cafés, tiendas y servicios) en Cusco, Perú.
+Sitio web en español desarrollado con **Astro** y **Tailwind CSS**, optimizado para el rendimiento, accesibilidad (WCAG AA), y adaptado para negocios locales (restaurantes, cafés, tiendas y servicios) en Cusco, Perú.
 
 ## 🚀 Requisitos Previos
 

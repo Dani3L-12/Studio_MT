@@ -1,25 +1,51 @@
 ---
 import GlassCard from './GlassCard.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   title: string;
   description: string;
   icon?: string;
+  image?: ImageMetadata;
 }
 
-const { title, description, icon } = Astro.props;
+const { title, description, icon, image } = Astro.props;
 ---
 
-<GlassCard class="flex flex-col items-start text-left hover:border-[#00E5C3] transition-all duration-300">
-  <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[#39FF14]/20 to-[#00E5C3]/20 flex items-center justify-center text-[#00E5C3] mb-4">
-    {icon ? (
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={icon}></svg>
-    ) : (
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    )}
+{image ? (
+  <div class="group relative rounded-2xl overflow-hidden border border-[var(--card-dark-border)] hover:border-[var(--brand-border)] hover:shadow-[0_0_25px_var(--brand-glow)] transition-all duration-300 min-h-[340px] flex flex-col justify-end p-6 shadow-xl">
+    <!-- Full-card background photo (natural colors) -->
+    <Image
+      src={image}
+      alt={title}
+      class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+      widths={[320, 640]}
+      sizes="(max-width: 640px) 100vw, 320px"
+      loading="lazy"
+    />
+    <!-- Readability overlay: strong at bottom where text sits -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#070B0A]/95 via-[#070B0A]/55 to-[#070B0A]/10 pointer-events-none"></div>
+
+    <!-- Overlay text with strong emphasis -->
+    <div class="relative z-10">
+      <div class="w-10 h-1 rounded-full bg-[var(--brand)] mb-3 shadow-[0_0_12px_var(--brand-glow)]"></div>
+      <h3 class="font-extrabold text-xl mb-2 font-['Space_Grotesk'] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">{title}</h3>
+      <p class="text-sm font-semibold text-zinc-100 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">{description}</p>
+    </div>
   </div>
-  <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{title}</h3>
-  <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{description}</p>
-</GlassCard>
+) : (
+  <GlassCard class="flex flex-col items-start text-left hover:border-[var(--brand-border)] transition-all duration-300">
+    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--brand-soft)] to-[var(--brand-soft)] flex items-center justify-center text-[var(--brand-fg)] mb-4">
+      {icon ? (
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={icon}></svg>
+      ) : (
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      )}
+    </div>
+    <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{title}</h3>
+    <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{description}</p>
+  </GlassCard>
+)}

@@ -13,7 +13,7 @@ import { es } from '../i18n/es';
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
 ---
 
-<Layout lang="es" title={es.pages.demos.title} description={es.pages.demos.subtitle}>
+<Layout title={es.pages.demos.title} description={es.pages.demos.subtitle}>
   <PageHeader title={es.pages.demos.title} subtitle={es.pages.demos.subtitle} />
 
   <Section>
@@ -21,7 +21,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
     <div class="flex flex-wrap items-center justify-center gap-3 mb-12" role="group" aria-label="Filtros de demos">
       <button 
         type="button" 
-        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer aria-pressed:bg-[#39FF14] aria-pressed:text-[#070B0A]" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[var(--brand-fg)] transition-all cursor-pointer aria-pressed:bg-[var(--brand)] aria-pressed:text-[#070B0A]" 
         data-filter="all"
         aria-pressed="true"
       >
@@ -29,7 +29,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
       </button>
       <button 
         type="button" 
-        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[var(--brand-fg)] transition-all cursor-pointer" 
         data-filter="comida"
         aria-pressed="false"
       >
@@ -37,7 +37,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
       </button>
       <button 
         type="button" 
-        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[var(--brand-fg)] transition-all cursor-pointer" 
         data-filter="tiendas"
         aria-pressed="false"
       >
@@ -45,7 +45,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
       </button>
       <button 
         type="button" 
-        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[#00E5C3] transition-all cursor-pointer" 
+        class="filter-btn px-5 py-2.5 rounded-xl glass-card text-xs font-mono font-bold hover:border-[var(--brand-fg)] transition-all cursor-pointer" 
         data-filter="servicios"
         aria-pressed="false"
       >
@@ -60,7 +60,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
     <div id="demos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-5xl mx-auto">
       {demosData.map((demo) => (
         <div class="demo-item" data-category={demo.category}>
-          <DemoCard demo={demo} lang="es" />
+          <DemoCard demo={demo} />
         </div>
       ))}
     </div>
@@ -73,7 +73,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
 
   <!-- CTA CUSTOM -->
   <Section class="text-center pt-0">
-    <GlassCard class="max-w-4xl mx-auto py-12 px-8 bg-gradient-to-br from-[#053B2A]/40 to-[var(--card-dark-bg)] border border-[#00E5C3]/30">
+    <GlassCard class="max-w-4xl mx-auto py-12 px-8 bg-gradient-to-br from-[#053B2A]/40 to-[var(--card-dark-bg)] border border-[var(--brand-border)]">
       <h2 class="text-2xl md:text-3xl font-extrabold mb-3 font-['Space_Grotesk']">
         ¿No ves tu tipo de negocio? Cuéntanos qué necesitas.
       </h2>
@@ -98,10 +98,10 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
 
       filterBtns.forEach(b => {
         b.setAttribute('aria-pressed', 'false');
-        b.classList.remove('bg-[#39FF14]', 'text-[#070B0A]');
+        b.classList.remove('bg-[var(--brand)]', 'text-[#070B0A]');
       });
       btn.setAttribute('aria-pressed', 'true');
-      btn.classList.add('bg-[#39FF14]', 'text-[#070B0A]');
+      btn.classList.add('bg-[var(--brand)]', 'text-[#070B0A]');
 
       let count = 0;
       demoItems.forEach(item => {

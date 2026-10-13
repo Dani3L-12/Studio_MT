@@ -11,13 +11,6 @@ export interface DemoItem {
     target: string;
     features: string[];
   };
-  en: {
-    name: string;
-    shortDesc: string;
-    longDesc: string;
-    target: string;
-    features: string[];
-  };
 }
 
 export const demosData: DemoItem[] = [
@@ -39,19 +32,6 @@ export const demosData: DemoItem[] = [
         "Botón de pedido directo a WhatsApp",
         "Ubicación y horarios de atención"
       ]
-    },
-    en: {
-      name: "Restaurant & Digital Menu",
-      shortDesc: "Interactive menu with photos, categories, QR code, and direct WhatsApp orders.",
-      longDesc: "Especially designed for restaurants and food spots in Cusco looking for clients to easily pick dishes from their phones by scanning table QR codes.",
-      target: "Restaurants, cafes, bars, bakeries, and eateries.",
-      features: [
-        "Digital menu organized by categories",
-        "Real photos of dishes and drinks",
-        "QR code for tables or delivery",
-        "Direct WhatsApp ordering button",
-        "Location and opening hours"
-      ]
     }
   },
   {
@@ -70,18 +50,6 @@ export const demosData: DemoItem[] = [
         "Filtros y categorías de búsqueda",
         "Botón de consulta rápida por WhatsApp en cada producto",
         "Galería optimizada para alta calidad"
-      ]
-    },
-    en: {
-      name: "Store Catalog (Clothing, Crafts)",
-      shortDesc: "Neat digital storefront with categories, search, and product inquiry buttons.",
-      longDesc: "Ideal for businesses selling apparel, crafts, or textiles in Cusco needing to showcase stock professionally without heavy online store bloat.",
-      target: "Clothing stores, crafts, jewelry, and textile shops.",
-      features: [
-        "Visual product catalog with prices",
-        "Search filters and categories",
-        "Quick WhatsApp inquiry button on each product",
-        "High-quality optimized gallery"
       ]
     }
   },
@@ -102,18 +70,6 @@ export const demosData: DemoItem[] = [
         "Botón directo de reservas por WhatsApp",
         "Mapa de ubicación y contacto"
       ]
-    },
-    en: {
-      name: "Landing for Barbers, Gyms & Clinics",
-      shortDesc: "Straightforward page to display services, prices, and book appointments via WhatsApp.",
-      longDesc: "A clean, persuasive web page building immediate trust, clearly explaining your services and making it easy to contact you instantly.",
-      target: "Barbershops, gyms, dentists, spas, and independent professionals.",
-      features: [
-        "High-impact hero section",
-        "Service list and pricing",
-        "Direct WhatsApp booking button",
-        "Map location and contact details"
-      ]
     }
   },
   {
@@ -132,18 +88,6 @@ export const demosData: DemoItem[] = [
         "Resumen de pedido ordenado para WhatsApp",
         "Gestión de variantes de productos",
         "Diseño 100% móvil"
-      ]
-    },
-    en: {
-      name: "Store with WhatsApp Cart",
-      shortDesc: "Simple shopping cart system where clients build their order and send it ready via WhatsApp.",
-      longDesc: "The perfect solution for delivery businesses wanting clients to select multiple items before sending the final order message.",
-      target: "Delivery ventures, local markets, flower shops, and specialty stores.",
-      features: [
-        "Catalog with integrated shopping cart",
-        "Structured order summary for WhatsApp",
-        "Product variant management",
-        "100% mobile-first design"
       ]
     }
   }
