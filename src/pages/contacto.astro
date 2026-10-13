@@ -13,6 +13,9 @@ import { es } from '../i18n/es';
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
 const emailUrl = `mailto:${siteConfig.email}`;
 
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const getTranslation = (key: string) => {
   const keys = key.split('.');
   let obj: any = es;
@@ -181,7 +184,7 @@ const getTranslation = (key: string) => {
           <div class="flex items-start gap-3">
             <input type="checkbox" id="consent" name="consent" required class="mt-1 w-4 h-4 rounded accent-[var(--brand)]" />
             <label for="consent" class="text-xs opacity-80">
-              {es.contactPage.consentLabel} <a href="/privacidad" class="text-[var(--brand-fg)] underline hover:text-[var(--brand-fg)]">{es.contactPage.privacyLink}</a>.
+              {es.contactPage.consentLabel} <a href={`${baseUrl}/privacidad`} class="text-[var(--brand-fg)] underline hover:text-[var(--brand-fg)]">{es.contactPage.privacyLink}</a>.
             </label>
           </div>
 

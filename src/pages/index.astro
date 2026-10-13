@@ -16,6 +16,9 @@ import landingImg from '../assets/landin.webp';
 import catalogoImg from '../assets/catalogo.webp';
 import tiendaImg from '../assets/tiendaWP.webp';
 
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const serviceIcons = [
   `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />`,
   `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />`,
@@ -76,7 +79,7 @@ const faqSchema = {
       <ServiceCard title={es.homeServices.card4Title} description={es.homeServices.card4Desc} icon={serviceIcons[3]} image={tiendaImg} />
     </div>
     <div class="text-center">
-      <Button variant="secondary" href="/servicios">{es.homeServices.cta}</Button>
+      <Button variant="secondary" href={`${baseUrl}/servicios`}>{es.homeServices.cta}</Button>
     </div>
   </Section>
 

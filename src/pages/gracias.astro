@@ -7,6 +7,9 @@ import { siteConfig } from '../config/site.config';
 import { es } from '../i18n/es';
 
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
+
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout title={es.contactPage.thanksTitle} description={es.contactPage.thanksSubtitle}>
@@ -26,7 +29,7 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
         <Button variant="primary" href={whatsappUrl} class="w-full justify-center">
           Escribir por WhatsApp
         </Button>
-        <Button variant="secondary" href="/" class="w-full justify-center">
+        <Button variant="secondary" href={`${baseUrl}/`} class="w-full justify-center">
           {es.contactPage.backHome}
         </Button>
       </div>

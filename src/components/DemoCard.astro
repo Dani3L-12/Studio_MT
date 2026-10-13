@@ -10,8 +10,11 @@ interface Props {
 const { demo } = Astro.props;
 const t = demo.es;
 
-const detailUrl = `/demos/${demo.slug}`;
-const liveUrl = `/en-vivo/${demo.slug}`;
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const detailUrl = `${baseUrl}/demos/${demo.slug}`;
+const liveUrl = `${baseUrl}/en-vivo/${demo.slug}`;
 
 const statusText = demo.status === 'live' ? 'Demo disponible' : 'Próximamente';
 ---

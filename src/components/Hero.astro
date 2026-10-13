@@ -13,6 +13,9 @@ import restauranteImg from '../assets/Restaurante.webp';
 
 const t = es;
 
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
 
 const projects: Array<{ title: string; category: string; gradient: string; icon: string; image?: typeof gymImg }> = [
@@ -99,7 +102,7 @@ const marqueeProjects = [...projects, ...projects];
 
         <!-- Two Buttons -->
         <div class="flex flex-col sm:flex-row items-start gap-4 w-full max-w-md">
-          <Button variant="primary" href="/demos" class="w-full sm:w-auto text-base px-8 py-4 shadow-[0_0_25px_var(--brand-glow)]">
+          <Button variant="primary" href={`${baseUrl}/demos`} class="w-full sm:w-auto text-base px-8 py-4 shadow-[0_0_25px_var(--brand-glow)]">
             {t.hero.ctaDemos}
           </Button>
           <Button variant="secondary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4 backdrop-blur-md bg-white/10 text-white border-white/20 hover:bg-white/20">

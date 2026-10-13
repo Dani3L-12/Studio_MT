@@ -41,6 +41,9 @@ function getTranslation(key: string) {
   return obj || key;
 }
 
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const whatsappDemoUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hola Daniel, quiero una web así como la demo "${t.name}".`)}`;
 const whatsappSoonUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(`Hola Daniel, me interesa la demo "${t.name}" que está en preparación.`)}`;
 const liveUrl = `/en-vivo/${demo.slug}`;
@@ -51,7 +54,7 @@ const liveUrl = `/en-vivo/${demo.slug}`;
     
     <!-- Back Link -->
     <div class="max-w-4xl mx-auto mb-8">
-      <a href="/demos" class="inline-flex items-center gap-2 text-sm font-mono opacity-80 hover:text-[var(--brand-fg)] transition-colors">
+      <a href={`${baseUrl}/demos`} class="inline-flex items-center gap-2 text-sm font-mono opacity-80 hover:text-[var(--brand-fg)] transition-colors">
         {es.demoDetail.back}
       </a>
     </div>
@@ -140,7 +143,7 @@ const liveUrl = `/en-vivo/${demo.slug}`;
           <h3 class="text-2xl font-bold font-['Space_Grotesk'] mb-1">{pkgName} — {recommendedPkg.price} <span class="text-xs font-normal opacity-70">ref.</span></h3>
           <p class="text-xs opacity-75">Entrega estimada en {pkgDelivery}</p>
         </div>
-        <Button variant="secondary" href="/paquetes">
+        <Button variant="secondary" href={`${baseUrl}/paquetes`}>
           {es.demoDetail.viewPackages}
         </Button>
       </GlassCard>
