@@ -6,69 +6,94 @@ export interface FaqItem {
 
 export const faqData: FaqItem[] = [
   {
-    qKey: "faqData.q1.q",
-    aKey: "faqData.q1.a",
+    qKey: "faqData.q1",
+    aKey: "faqData.q1",
     category: 'general'
   },
   {
-    qKey: "faqData.q2.q",
-    aKey: "faqData.q2.a",
+    qKey: "faqData.q2",
+    aKey: "faqData.q2",
     category: 'general'
   },
   {
-    qKey: "faqData.q3.q",
-    aKey: "faqData.q3.a",
+    qKey: "faqData.q3",
+    aKey: "faqData.q3",
     category: 'general'
   },
   {
-    qKey: "faqData.q4.q",
-    aKey: "faqData.q4.a",
+    qKey: "faqData.q4",
+    aKey: "faqData.q4",
     category: 'general'
   },
   {
-    qKey: "faqData.q5.q",
-    aKey: "faqData.q5.a",
+    qKey: "faqData.q5",
+    aKey: "faqData.q5",
+    category: 'general'
+  },
+  {
+    qKey: "faqData.q6",
+    aKey: "faqData.q6",
+    category: 'general'
+  },
+  {
+    qKey: "faqData.q7",
+    aKey: "faqData.q7",
+    category: 'general'
+  },
+  {
+    qKey: "faqData.q8",
+    aKey: "faqData.q8",
+    category: 'general'
+  },
+  {
+    qKey: "faqData.q9",
+    aKey: "faqData.q9",
+    category: 'general'
+  },
+  {
+    qKey: "faqData.q10",
+    aKey: "faqData.q10",
     category: 'general'
   }
 ];
 
 export const pricingFaqData: FaqItem[] = [
   {
-    qKey: "pricingFaq.q1.q",
-    aKey: "pricingFaq.q1.a",
+    qKey: "pricingFaq.q1",
+    aKey: "pricingFaq.a1",
     category: 'pricing'
   },
   {
-    qKey: "pricingFaq.q2.q",
-    aKey: "pricingFaq.q2.a",
+    qKey: "pricingFaq.q2",
+    aKey: "pricingFaq.a2",
     category: 'pricing'
   },
   {
-    qKey: "pricingFaq.q3.q",
-    aKey: "pricingFaq.q3.a",
+    qKey: "pricingFaq.q3",
+    aKey: "pricingFaq.a3",
     category: 'pricing'
   },
   {
-    qKey: "pricingFaq.q4.q",
-    aKey: "pricingFaq.q4.a",
+    qKey: "pricingFaq.q4",
+    aKey: "pricingFaq.a4",
     category: 'pricing'
   }
 ];
 
 export const contactFaqData: FaqItem[] = [
   {
-    qKey: "contactFaq.q1.q",
-    aKey: "contactFaq.q1.a",
+    qKey: "contactFaq.q1",
+    aKey: "contactFaq.a1",
     category: 'contact'
   },
   {
-    qKey: "contactFaq.q2.q",
-    aKey: "contactFaq.q2.a",
+    qKey: "contactFaq.q2",
+    aKey: "contactFaq.a2",
     category: 'contact'
   },
   {
-    qKey: "contactFaq.q3.q",
-    aKey: "contactFaq.q3.a",
+    qKey: "contactFaq.q3",
+    aKey: "contactFaq.a3",
     category: 'contact'
   }
 ];

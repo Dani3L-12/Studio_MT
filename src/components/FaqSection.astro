@@ -1,14 +1,17 @@
 ---
 import Section from './Section.astro';
-import GlassCard from './GlassCard.astro';
+import Button from './Button.astro';
 import { faqData } from '../data/faq';
 import { es } from '../i18n/es';
+import { siteConfig } from '../config/site.config';
 
 const t = es;
 
+const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent('Hola, tengo una duda sobre el servicio web.')}`;
+
 const getTranslation = (key: string) => {
   const keys = key.split('.');
-  let obj: any = t;
+  let obj: any = es;
   for (const k of keys) {
     obj = obj?.[k];
   }
@@ -17,69 +20,198 @@ const getTranslation = (key: string) => {
 ---
 
 <Section title={t.faqSection.title} subtitle={t.faqSection.subtitle}>
-  <div class="space-y-4 max-w-3xl mx-auto text-left">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4 max-w-[1100px] mx-auto" id="faq-accordion" role="region" aria-label={t.faqSection.title}>
     {faqData.map((item, index) => {
-      const qText = getTranslation(`${item.qKey}.q`);
-      const aText = getTranslation(`${item.qKey}.a`);
       const buttonId = `faq-btn-${index}`;
       const panelId = `faq-panel-${index}`;
+      const isFirst = index === 0;
 
-      return (
-        <GlassCard class="p-0 overflow-hidden transition-all duration-300">
+return (
+        <div class="faq-item group" data-index={index}>
           <h3>
             <button 
               id={buttonId}
               type="button"
-              class="w-full p-6 text-left font-bold text-base md:text-lg flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--brand-fg)]"
-              aria-expanded="false"
+              class="w-full flex items-center justify-between gap-4 px-6 py-4 md:py-3 text-left font-medium text-base md:text-lg text-white transition-colors duration-200 hover:text-[var(--brand-fg)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-fg)] focus:ring-offset-2 focus:ring-[#070B0A] rounded-md"
+              aria-expanded={isFirst}
               aria-controls={panelId}
             >
-              <span>{qText}</span>
-              <svg class="w-5 h-5 transition-transform duration-300 transform shrink-0 text-[var(--brand-fg)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              <span class="flex-1 text-left pr-4">{getTranslation(`${item.qKey}.q`)}</span>
+              <svg class="w-5 h-5 shrink-0 text-[var(--brand-fg)] transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
           </h3>
-          <div 
+          <div
             id={panelId}
             role="region"
             aria-labelledby={buttonId}
-            class="hidden px-6 pb-6 pt-0 text-sm opacity-80 leading-relaxed border-t border-[var(--card-dark-border)] pt-4 mt-2"
+            class="overflow-hidden transition-all duration-300 ease-in-out"
+            style={`max-height: ${isFirst ? '500px' : '0'}`}
           >
-            <p>{aText}</p>
+            <div class="px-6 pb-6 pt-0 text-sm opacity-90 leading-relaxed border-t border-[var(--card-dark-border)]">
+              <p class="text-base md:text-[15px] leading-relaxed text-zinc-100">{getTranslation(`${item.aKey}.a`)}</p>
+            </div>
           </div>
-        </GlassCard>
+        </div>
       );
     })}
   </div>
-</Section>
+
+  </Section>
 
 <script>
-  document.querySelectorAll('button[aria-controls^="faq-panel-"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      const panelId = btn.getAttribute('aria-controls');
-      const panel = document.getElementById(panelId!);
-      const icon = btn.querySelector('svg');
+  document.addEventListener('DOMContentLoaded', () => {
+    const accordion = document.getElementById('faq-accordion');
+    if (!accordion) return;
 
-      // Close all other panels (optional accordion behavior)
-      document.querySelectorAll('button[aria-controls^="faq-panel-"]').forEach(otherBtn => {
-        if (otherBtn !== btn) {
-          otherBtn.setAttribute('aria-expanded', 'false');
-          const otherPanelId = otherBtn.getAttribute('aria-controls');
-          document.getElementById(otherPanelId!)?.classList.add('hidden');
-          otherBtn.querySelector('svg')?.style.setProperty('transform', 'rotate(0deg)');
+    const buttons = accordion.querySelectorAll('button[aria-controls^="faq-panel-"]');
+    const panels = document.querySelectorAll('[id^="faq-panel-"]');
+
+    // Initialize: first open, others closed
+    panels.forEach((panel, i) => {
+      const isFirst = i === 0;
+      panel.style.maxHeight = '0';
+      panel.style.paddingBottom = '0';
+      panel.style.paddingTop = '0';
+      panel.style.overflow = 'hidden';
+      panel.style.transition = 'max-height 300ms ease-in-out, padding 300ms ease-in-out';
+
+      if (i === 0) {
+        panel.style.maxHeight = '500px';
+        panel.style.paddingBottom = '1.5rem';
+        panel.style.paddingTop = '0.5rem';
+        panel.style.opacity = '1';
+      } else {
+        panel.style.maxHeight = '0';
+        panel.style.paddingBottom = '0';
+        panel.style.paddingTop = '0';
+      }
+    });
+
+    // Set initial ARIA states
+    document.querySelectorAll('button[aria-controls^="faq-panel-"]').forEach((btn, i) => {
+      btn.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+    });
+
+    const allItems = Array.from(document.querySelectorAll('.faq-item'));
+
+    document.querySelectorAll('button[aria-controls^="faq-panel-"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        const panelId = btn.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        const icon = btn.querySelector('svg');
+        const item = btn.closest('.faq-item');
+        const currentIndex = Array.from(document.querySelectorAll('.faq-item')).findIndex(item => item === btn.closest('.faq-item'));
+
+        // Close all other panels
+        document.querySelectorAll('.faq-item').forEach((item, i) => {
+          if (i === currentIndex) return;
+
+          const otherBtn = item.querySelector('button[aria-controls^="faq-panel-"]');
+          const otherPanel = item.querySelector('[id^="faq-panel-"]');
+          const otherIcon = otherBtn?.querySelector('svg');
+
+          if (otherBtn) {
+            otherBtn.setAttribute('aria-expanded', 'false');
+          }
+          if (otherPanel) {
+            otherPanel.style.maxHeight = '0';
+            otherPanel.style.paddingBottom = '0';
+            otherPanel.style.paddingTop = '0';
+          }
+          if (otherIcon) {
+            otherIcon?.style.setProperty('transform', 'rotate(0deg)');
+          }
+          otherBtn?.setAttribute('aria-expanded', 'false');
+        });
+
+        // Toggle current
+        if (expanded) {
+          btn.setAttribute('aria-expanded', 'false');
+          if (panel) {
+            panel.style.maxHeight = '0';
+            panel.style.paddingBottom = '0';
+            panel.style.paddingTop = '0';
+          }
+          icon?.style.setProperty('transform', 'rotate(0deg)');
+        } else {
+          btn.setAttribute('aria-expanded', 'true');
+          if (panel) {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+            panel.style.paddingBottom = '1.5rem';
+            panel.style.paddingTop = '0.5rem';
+          }
+          icon?.style.setProperty('transform', 'rotate(180deg)');
         }
       });
+    });
 
-      btn.setAttribute('aria-expanded', (!expanded).toString());
-      if (expanded) {
-        panel?.classList.add('hidden');
-        icon?.style.setProperty('transform', 'rotate(0deg)');
-      } else {
-        panel?.classList.remove('hidden');
-        icon?.style.setProperty('transform', 'rotate(180deg)');
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        const focusedBtn = document.activeElement;
+        if (!focusedBtn || !focusedBtn.hasAttribute('aria-controls')) return;
+
+        e.preventDefault();
+        const buttonsList = document.querySelectorAll('button[aria-controls^="faq-panel-"]');
+        const currentIndex = Array.from(buttonsList).indexOf(focusedBtn);
+        const nextIndex = e.key === 'ArrowDown' 
+          ? (currentIndex === buttonsList.length - 1 ? 0 : currentIndex + 1)
+          : (currentIndex === 0 ? buttonsList.length - 1 : currentIndex - 1);
+
+        buttonsList[nextIndex]?.focus();
       }
     });
   });
 </script>
+
+<style>
+  .faq-item {
+    border-bottom: 1px solid var(--brand-border);
+    background: transparent;
+  }
+
+  /* .faq-item:last-child {
+    border-bottom: none;
+  } */
+
+  .faq-item:focus-within {
+    background: rgba(57, 255, 20, 0.03);
+  }
+
+  .faq-item h3 button {
+    padding: 14px 24px 14px 6px;
+  }
+
+  @media (min-width: 900px) {
+    .faq-item h3 button {
+      padding: 16px 24px 16px 6px;
+    }
+  }
+
+  .faq-item h3 button:hover {
+    color: var(--brand-fg);
+  }
+
+  .faq-item h3 button:focus-visible {
+    outline: 2px solid var(--brand-fg);
+    outline-offset: -2px;
+  }
+
+  .faq-item .group-open svg {
+    transform: rotate(180deg);
+  }
+
+  .faq-item [id^="faq-panel-"] {
+    overflow: hidden;
+    transition: max-height 300ms ease-in-out, padding 300ms ease-in-out, opacity 200ms ease-in-out;
+  }
+
+  .faq-item [id^="faq-panel-"] p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #d4d4d8;
+  }
+</style>
