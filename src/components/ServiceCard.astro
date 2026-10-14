@@ -24,8 +24,11 @@ const { title, description, icon, image } = Astro.props;
       sizes="(max-width: 640px) 100vw, 320px"
       loading="lazy"
     />
-    <!-- Overlay text with strong emphasis -->
-    <div class="absolute inset-0 soft-fade mask-pointer">
+    <!-- Readability overlay: strong at bottom where text sits -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#070B0A]/95 via-[#070B0A]/55 to-[#070B0A]/10 pointer-events-none"></div>
+
+    <!-- Text at bottom of image (using group's justify-end flow) -->
+    <div class="relative z-10 inset-0 end-0 start-auto p-6">
       <div class="w-10 h-1 rounded-full bg-[var(--brand)] mb-3 shadow-[0_0_12px_var(--brand-glow)]"></div>
       <h3 class="font-extrabold text-xl mb-2 font-['Space_Grotesk'] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">{title}</h3>
       <p class="text-sm font-semibold text-zinc-100 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,1)]">{description}</p>

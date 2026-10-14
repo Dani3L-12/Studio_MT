@@ -13,15 +13,14 @@ const services = [
       number: '01',
       title: 'Carta digital',
       description: 'Tu menú en una web que se abre con un QR. Tus clientes ven platos, fotos y precios, y te hacen el pedido directo por WhatsApp.',
-      idealFor: ['Restaurantes', 'Cafeterías', 'Pollerías', 'Panaderías', 'Negocios de comida'],
+      idealFor: ['Restaurantes', 'Cafeterías', 'Pollerías', 'Comida'],
       includes: [
         'Menú por categorías',
         'Fotos de tus platos',
-        'Precios fáciles de actualizar',
-        'Botón de pedido por WhatsApp',
-        'QR listo para imprimir',
-        'Diseño pensado para celular',
-        'Mapa, horarios y contacto'
+        'Precios actualizables',
+        'Pedidos por WhatsApp',
+        'QR para imprimir',
+        'Diseño para celular'
       ],
     demoHref: '/en-vivo/restaurante',
     image: '/images/services/carta.webp',
@@ -33,14 +32,14 @@ const services = [
       number: '02',
       title: 'Landing page',
       description: 'Una página clara y rápida que presenta tu negocio, muestra tus servicios y lleva al cliente a escribirte o reservar.',
-      idealFor: ['Barberías', 'Gimnasios', 'Consultorios', 'Academias', 'Servicios profesionales'],
+      idealFor: ['Barberías', 'Gimnasios', 'Consultorios', 'Academias'],
       includes: [
-        'Sección principal con tu propuesta',
+        'Portada con propuesta',
         'Servicios y precios',
         'Galería de trabajos',
-        'Botón de WhatsApp directo',
+        'WhatsApp directo',
         'Mapa y horarios',
-        'Diseño adaptado al celular'
+        'Diseño para celular'
       ],
     demoHref: '/en-vivo/landing-servicios',
     image: '/images/services/landing.webp',
@@ -52,14 +51,14 @@ const services = [
       number: '03',
       title: 'Catálogo web',
       description: 'Muestra tus productos en una web ordenada y recibe consultas al instante, sin que el cliente tenga que preguntar "¿qué tienes?".',
-      idealFor: ['Tiendas de ropa', 'Ferreterías', 'Joyerías', 'Accesorios', 'Artesanías'],
+      idealFor: ['Ropa', 'Ferreterías', 'Joyerías', 'Artesanías'],
       includes: [
-        'Catálogo de hasta ~30 productos',
-        'Categorías para encontrar rápido',
-        'Foto, precio y descripción por producto',
-        'Botón "Consultar" por WhatsApp en cada producto',
+        'Hasta ~30 productos',
+        'Categorías rápidas',
+        'Foto, precio y detalle',
+        'Consulta por WhatsApp',
         'SEO básico',
-        'Diseño pensado para celular'
+        'Diseño para celular'
       ],
       demoHref: '/en-vivo/catalogo',
       image: '/images/services/catalogo.webp',
@@ -71,13 +70,13 @@ const services = [
       number: '04',
       title: 'Tienda con WhatsApp',
       description: 'Un carrito simple que termina en un mensaje de pedido armado en tu WhatsApp. Sin comisiones ni pasarelas complicadas.',
-      idealFor: ['Delivery', 'Boutiques', 'Tiendas de regalos', 'Emprendimientos que venden por pedido'],
+      idealFor: ['Delivery', 'Boutiques', 'Regalos', 'Ventas por pedido'],
       includes: [
         'Catálogo con carrito',
-        'Cantidades y total automático',
-        'Pedido listo en tu WhatsApp',
-        'Opción de entrega o recojo',
-        'Versión en español e inglés',
+        'Total automático',
+        'Pedido por WhatsApp',
+        'Delivery o recojo',
+        'Español e inglés',
         'Capacitación por Meet'
       ],
     demoHref: '/en-vivo/tienda',
@@ -109,50 +108,58 @@ const services = [
     })}
   </nav>
 
-  <!-- SERVICE ROWS -->
-  <div class="flex flex-col gap-20 md:gap-24 max-w-[1100px] mx-auto" id="services-grid" role="list" aria-label="Servicios disponibles">
-    {services.map((svc, index) => {
-      const isEven = index % 2 === 1;
-      return (
-        <div id={svc.id} class="service-item grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-x-16 items-center scroll-mt-28">
-          <!-- Image -->
-          <div
-            class:list={["group relative aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--card-dark-bg)] shadow-2xl", isEven ? "lg:order-2" : "lg:order-1"]}
-            style="isolation: isolate"
-          >
-            <img
-              src={`${baseUrl}${svc.image}`}
-              alt={svc.imageAlt}
-              class="relative w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-500 soft-fade"
-              loading={svc.number === '01' ? 'eager' : 'lazy'}
-              onerror="this.remove()"
-            />
+<!-- Service Rows -->
+<div class="mx-auto flex max-w-[1100px] flex-col gap-24 md:gap-28" id="services-grid" role="list" aria-label="Servicios disponibles">
+  {services.map((svc, index) => {
+    const isEven = index % 2 === 1;
+    return (
+      <div id={svc.id} class="service-item grid scroll-mt-28 grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-x-16">
+        <!-- Image -->
+        <div
+          class:list={["svc-media group relative aspect-[4/3] w-full bg-transparent", isEven ? "lg:order-2" : "lg:order-1"]}
+        >
+          <img
+            src={`${baseUrl}${svc.image}`}
+            alt={svc.imageAlt}
+            class="absolute inset-0 h-full w-full object-cover object-center"
+            loading={svc.number === '01' ? 'eager' : 'lazy'}
+            onerror="this.remove()"
+          />
+        </div>
+
+        <!-- Text Content -->
+        <div class:list={["flex w-full max-w-[520px] flex-col gap-5", isEven ? "lg:order-1" : "lg:order-2"]}>
+          <div>
+            <span class="inline-block font-mono text-[13px] tracking-widest text-[var(--brand-fg)]">{svc.number}</span>
+            <hr class="mt-2 h-[1px] w-[40px] border-0 bg-[rgba(57,255,20,0.3)]" />
           </div>
+          <h2 class="text-[32px] font-semibold leading-tight tracking-tight text-white md:text-4xl">{svc.title}</h2>
+          <p class="max-w-[460px] text-[16px] leading-relaxed text-zinc-300">{svc.description}</p>
 
-          <!-- Text Content -->
-          <div class:list={["max-w-[480px]", isEven ? "lg:order-1" : "lg:order-2"]}>
-            <span class="inline-block px-3 py-1 rounded-full bg-[var(--brand)] text-[#070B0A] text-xs font-bold font-mono mb-3">
-              {index + 1 < 10 ? '0' : ''}{index + 1}
-            </span>
-            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-4">{svc.title}</h2>
-            <p class="text-lg opacity-80 leading-relaxed mb-8 max-w-[480px]">{svc.description}</p>
+          <hr class="h-px border-0 bg-[rgba(57,255,20,0.12)]" />
 
-            <div class="flex flex-wrap gap-2 mb-8">
+          <div class="grid grid-cols-[110px_1fr] items-start gap-4 max-sm:grid-cols-1 max-sm:gap-2">
+            <span class="pt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-zinc-400">Ideal para</span>
+            <div class="flex flex-wrap gap-2">
               {svc.idealFor.map((item) => {
                 return (
-                  <span class="chip px-3 py-1 rounded-full text-sm font-medium border border-[var(--brand-border)] text-[var(--brand-fg)] bg-transparent">
+                  <span class="rounded-full border border-[rgba(57,255,20,0.3)] bg-transparent px-3 py-1.5 text-[13px] font-medium text-zinc-200">
                     {item}
                   </span>
                 );
               })}
             </div>
+          </div>
 
-            <h3 class="text-lg font-semibold mb-4 text-[var(--brand-fg)]">Qué incluye</h3>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+          <hr class="h-px border-0 bg-[rgba(57,255,20,0.12)]" />
+
+          <div class="grid grid-cols-[110px_1fr] items-start gap-4 max-sm:grid-cols-1 max-sm:gap-2">
+            <span class="pt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-zinc-400">Incluye</span>
+            <ul class="grid grid-cols-2 gap-x-6 gap-y-3 max-sm:grid-cols-1">
               {svc.includes.map((item) => {
                 return (
-                  <li class="flex items-center gap-3 text-base leading-relaxed text-zinc-200">
-                    <svg class="w-5 h-5 shrink-0 text-[var(--brand-fg)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <li class="flex items-start gap-3 text-[15px] leading-relaxed text-zinc-200">
+                    <svg class="mt-[3px] h-4 w-4 shrink-0 text-[var(--brand-fg)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
                     <span class="text-zinc-100">{item}</span>
@@ -160,29 +167,35 @@ const services = [
                 );
               })}
             </ul>
+          </div>
 
-            <div class="flex flex-col sm:flex-row gap-4">
-              <a
-                href={whatsappUrl(svc.whatsappMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Cotizar ${svc.title} por WhatsApp`}
-                class="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 font-bold text-base rounded-xl bg-[var(--brand)] text-[#070B0A] hover:brightness-95 transition-all duration-200 shadow-[0_0_20px_var(--brand-glow)] hover:shadow-[0_0_25px_var(--brand-glow)]"
-              >
-                Cotizar este servicio
-              </a>
-              <a
-                href={`${baseUrl}${svc.demoHref}`}
-                class="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 font-bold text-base rounded-xl border-2 border-[var(--brand-fg)] text-[var(--brand-fg)] hover:bg-[var(--brand)] hover:text-[#070B0A] transition-all duration-300"
-              >
-                Ver demo
-              </a>
-            </div>
+          <hr class="h-px border-0 bg-[rgba(57,255,20,0.12)]" />
+
+          <div class="grid w-full grid-cols-[1.4fr_1fr] gap-3 max-sm:grid-cols-1">
+            <a
+              href={whatsappUrl(svc.whatsappMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Cotizar ${svc.title} por WhatsApp`}
+              class="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand)] px-6 text-base font-bold text-[#070B0A] transition-all duration-200 hover:brightness-95"
+            >
+              Cotizar este servicio
+              <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6" />
+              </svg>
+            </a>
+            <a
+              href={`${baseUrl}${svc.demoHref}`}
+              class="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-[var(--brand-fg)] px-6 text-base font-bold text-[var(--brand-fg)] transition-all duration-300 hover:bg-[var(--brand)] hover:text-[#070B0A]"
+            >
+              Ver demo
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
     );
   })}
-  </div>
+</div>
 
   <!-- CTA FINAL -->
   <section class="py-20">
@@ -229,11 +242,70 @@ const services = [
     color: var(--brand-fg);
   }
 
-  /* Soft 4-side fade mask for images */
-  .soft-fade {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to left, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to top, transparent 0%, black 14%, black 86%, transparent 100%);
-    -webkit-mask-composite: over;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to left, transparent 0%, black 14%, black 86%, transparent 100%), linear-gradient(to top, transparent 0%, black 14%, black 86%, transparent 100%);
+  /* Servicio: imagen flotante, sin caja. Solo contenedor de imagen. */
+  .svc-media {
+    --svc-fade-start: 14%;
+    --svc-fade-end: 86%;
+    --svc-glow-opacity: 0.12;
+    --svc-glow-opacity-hover: 0.18;
+    --svc-glow-blur: 50px;
+    --svc-float-duration: 6s;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  /* Luz ambiental detrás: elipse radial, sin forma de caja */
+  .svc-media::before {
+    content: "";
+    position: absolute;
+    inset: 12% 8%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(57, 255, 20, var(--svc-glow-opacity)) 0%, transparent 70%);
+    filter: blur(var(--svc-glow-blur));
+    opacity: 1;
+    transition: opacity 300ms ease;
+  }
+
+  .svc-media img {
+    z-index: 1;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+    border-radius: 0;
+    animation: svc-float var(--svc-float-duration) ease-in-out infinite alternate;
+    transition: transform 300ms ease;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, #000 var(--svc-fade-start), #000 var(--svc-fade-end), transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 var(--svc-fade-start), #000 var(--svc-fade-end), transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, #000 var(--svc-fade-start), #000 var(--svc-fade-end), transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 var(--svc-fade-start), #000 var(--svc-fade-end), transparent 100%);
     mask-composite: intersect;
+  }
+
+  @media (hover: hover) {
+    .svc-media:hover img {
+      animation: none;
+      transform: translateY(-6px);
+    }
+    .svc-media:hover::before {
+      background: radial-gradient(ellipse at center, rgba(57, 255, 20, var(--svc-glow-opacity-hover)) 0%, transparent 70%);
+    }
+  }
+
+  @keyframes svc-float {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .svc-media img {
+      animation: none;
+    }
   }
 </style>
