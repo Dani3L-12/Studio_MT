@@ -31,7 +31,7 @@ const getTranslation = (key: string) => {
 
   <Section>
     <!-- CANALES DE CONTACTO -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-block max-w-6xl mx-auto mb-block">
       
       <!-- WhatsApp (destacado) -->
       <GlassCard class="p-6 flex flex-col justify-between border-[#25D366]/40 bg-gradient-to-br from-[#25D366]/10 to-[var(--card-dark-bg)]">
@@ -88,7 +88,7 @@ const getTranslation = (key: string) => {
 
     <!-- FORMULARIO (Netlify Forms) -->
     <!-- Netlify Forms solo funciona en el sitio publicado en Netlify, no con npm run dev. -->
-    <div class="max-w-2xl mx-auto mb-20">
+    <div class="max-w-2xl mx-auto mb-block">
       <GlassCard class="p-8 md:p-12">
         <div class="text-center mb-8">
           <h2 class="text-2xl md:text-3xl font-extrabold mb-2 font-['Space_Grotesk']">{es.contactPage.formTitle}</h2>
@@ -204,7 +204,7 @@ const getTranslation = (key: string) => {
     </div>
 
     <!-- PREGUNTAS FRECUENTES (Contacto) -->
-    <div class="max-w-3xl mx-auto mb-16">
+    <div class="max-w-3xl mx-auto mb-block">
       <div class="text-center mb-8">
         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 font-['Space_Grotesk']">
           Preguntas sobre contacto

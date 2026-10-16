@@ -11,7 +11,7 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title={es.pages.notFound.title} description={es.pages.notFound.subtitle} noindex={true}>
-  <Section class="text-center py-24">
+  <Section class="text-center pb-section">
     <GlassCard class="max-w-xl mx-auto p-10 md:p-14 space-y-6">
       <div class="text-7xl font-extrabold font-mono text-[var(--brand-fg)]">404</div>
       <h1 class="text-3xl font-bold font-['Space_Grotesk']">{es.pages.notFound.title}</h1>
@@ -19,7 +19,7 @@ const base = import.meta.env.BASE_URL;
       
       <div class="flex flex-wrap items-center justify-center gap-3 pt-4 font-mono text-xs font-bold">
         <a href={`${base}servicios`} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Servicios</a>
-        <a href={`${base}demos`} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Demos</a>
+        <a href={base} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Inicio</a>
         <a href={`${base}contacto`} class="px-4 py-2 rounded-xl glass-card hover:border-[var(--brand-fg)]">Contacto</a>
       </div>
 

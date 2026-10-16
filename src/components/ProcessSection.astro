@@ -1,32 +1,199 @@
 ---
 import Section from './Section.astro';
-import GlassCard from './GlassCard.astro';
 import { processData } from '../data/process';
 import { es } from '../i18n/es';
 
 const t = es;
-
-// Helper to get nested translation values safely
-const getTranslation = (key: string) => {
-  const keys = key.split('.');
-  let obj: any = t;
-  for (const k of keys) {
-    obj = obj?.[k];
-  }
-  return obj || key;
-};
 ---
 
 <Section title={t.processSection.title} subtitle={t.processSection.subtitle}>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-    {processData.map((item) => (
-      <GlassCard class="flex flex-col items-start text-left h-full">
-        <div class="text-[var(--brand-fg)] font-mono font-bold text-xl mb-3 px-3 py-1 rounded-lg bg-[var(--brand-soft)] border border-[var(--brand-border)]">
-          {item.step}
-        </div>
-        <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{getTranslation(`${item.titleKey}.title`)}</h3>
-        <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{getTranslation(`${item.titleKey}.desc`)}</p>
-      </GlassCard>
-    ))}
+  <div class="timeline" data-timeline>
+    <ol class="timeline-list">
+      {processData.map((item) => (
+        <li class="step">
+          <span class="step-num">{item.numero}</span>
+          <span class="step-node" data-node aria-hidden="true"></span>
+          <div class="step-body">
+            <h3 class="step-title">{item.titulo}</h3>
+            <p class="step-desc">{item.descripcion}</p>
+            <p class="step-owner">A cargo de: {item.aCargo}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="timeline-rail" aria-hidden="true">
+      <div class="timeline-progress"></div>
+    </div>
   </div>
 </Section>
+
+<style>
+  .timeline {
+    position: relative;
+  }
+
+  .timeline-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-block);
+  }
+
+  .step {
+    margin: 0;
+    padding: 0;
+  }
+
+  .step-num {
+    display: block;
+    margin: 0 0 var(--space-item);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    color: var(--brand-fg);
+  }
+
+  .step-node {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    opacity: 0.4;
+    margin: var(--space-item) 0;
+    transition: opacity 300ms ease;
+  }
+
+  .step-node.is-lit {
+    opacity: 1;
+    border-color: var(--brand);
+    background: var(--brand);
+  }
+
+  .step-body {
+    margin-left: 30px;
+  }
+
+  .step-title {
+    margin: 0 0 var(--space-item);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #ffffff;
+  }
+
+  .step-desc {
+    margin: 0 0 var(--space-item);
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .step-owner {
+    margin: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .timeline-rail {
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .timeline-progress {
+    position: absolute;
+    inset: 0;
+    background: var(--brand);
+    transform: scaleY(0);
+    transform-origin: top center;
+    transition: transform 1.6s ease-out;
+  }
+
+  .timeline.is-done .timeline-progress {
+    transform: scaleY(1);
+  }
+
+  @media (min-width: 900px) {
+    .timeline-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .step-node {
+      margin: 0 0 var(--space-item);
+    }
+
+    .step-body {
+      margin-left: 0;
+    }
+
+    .step-desc {
+      max-width: 280px;
+    }
+
+    .timeline-rail {
+      left: 0;
+      right: 0;
+      top: 38px;
+      bottom: auto;
+      width: auto;
+      height: 2px;
+    }
+
+    .timeline-progress {
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    .timeline.is-done .timeline-progress {
+      transform: scaleX(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline-progress {
+      transform: none;
+      transition: none;
+    }
+    .step-node {
+      opacity: 1;
+      border-color: var(--brand);
+      background: var(--brand);
+    }
+  }
+</style>
+
+<script>
+  const timeline = document.querySelector('[data-timeline]');
+
+  if (timeline && 'IntersectionObserver' in window) {
+    const nodes = Array.from(timeline.querySelectorAll('[data-node]'));
+    const last = Math.max(nodes.length - 1, 1);
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          timeline.classList.add('is-done');
+          nodes.forEach((node, i) => {
+            window.setTimeout(() => node.classList.add('is-lit'), (i * 1600) / last);
+          });
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(timeline);
+  }
+</script>

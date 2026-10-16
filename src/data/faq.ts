@@ -1,7 +1,7 @@
 export interface FaqItem {
   qKey: string;
   aKey: string;
-  category?: 'general' | 'pricing' | 'contact';
+  category?: 'general' | 'contact';
 }
 
 export const faqData: FaqItem[] = [
@@ -54,29 +54,6 @@ export const faqData: FaqItem[] = [
     qKey: "faqData.q10",
     aKey: "faqData.q10",
     category: 'general'
-  }
-];
-
-export const pricingFaqData: FaqItem[] = [
-  {
-    qKey: "pricingFaq.q1",
-    aKey: "pricingFaq.a1",
-    category: 'pricing'
-  },
-  {
-    qKey: "pricingFaq.q2",
-    aKey: "pricingFaq.a2",
-    category: 'pricing'
-  },
-  {
-    qKey: "pricingFaq.q3",
-    aKey: "pricingFaq.a3",
-    category: 'pricing'
-  },
-  {
-    qKey: "pricingFaq.q4",
-    aKey: "pricingFaq.a4",
-    category: 'pricing'
   }
 ];
 

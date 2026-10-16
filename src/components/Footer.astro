@@ -9,7 +9,7 @@ const t = es;
 const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<footer class="mt-20 border-t border-[var(--card-dark-border)] backdrop-blur-md bg-[var(--card-dark-bg)] py-16 px-6">
+<footer class="border-t border-[var(--card-dark-border)] backdrop-blur-md bg-[var(--card-dark-bg)] py-16 px-6">
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
     <!-- Brand & Slogan -->
     <div class="space-y-4">
@@ -27,8 +27,6 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
       <ul class="space-y-3 text-sm opacity-80 font-medium">
         <li><a href={`${baseUrl}/`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.home}</a></li>
         <li><a href={`${baseUrl}/servicios`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.services}</a></li>
-        <li><a href={`${baseUrl}/demos`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.demos}</a></li>
-        <li><a href={`${baseUrl}/paquetes`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.packages}</a></li>
         <li><a href={`${baseUrl}/nosotros`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.about}</a></li>
         <li><a href={`${baseUrl}/contacto`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.contact}</a></li>
       </ul>

@@ -22,7 +22,6 @@ const services = [
         'QR para imprimir',
         'Diseño para celular'
       ],
-    demoHref: '/en-vivo/restaurante',
     image: '/images/services/carta.webp',
       imageAlt: 'Captura de una carta digital en un celular mostrando un menú de restaurante con platos, precios y botón de WhatsApp',
       whatsappMessage: 'Hola, me interesa el servicio de Carta digital para mi negocio. ¿Me das más información?'
@@ -41,7 +40,6 @@ const services = [
         'Mapa y horarios',
         'Diseño para celular'
       ],
-    demoHref: '/en-vivo/landing-servicios',
     image: '/images/services/landing.webp',
       imageAlt: 'Captura de una landing page para una barbería mostrando servicios, precios y botón de WhatsApp',
       whatsappMessage: 'Hola, me interesa el servicio de Landing page para mi negocio. ¿Me das más información?'
@@ -60,7 +58,6 @@ const services = [
         'SEO básico',
         'Diseño para celular'
       ],
-      demoHref: '/en-vivo/catalogo',
       image: '/images/services/catalogo.webp',
       imageAlt: 'Captura de un catálogo web mostrando productos en categorías con fotos y precios',
       whatsappMessage: 'Hola, me interesa el servicio de Catálogo web para mi negocio. ¿Me das más información?'
@@ -79,7 +76,6 @@ const services = [
         'Español e inglés',
         'Capacitación por Meet'
       ],
-    demoHref: '/en-vivo/tienda',
     image: '/images/services/tienda.webp',
       imageAlt: 'Captura de una tienda con carrito mostrando productos, cantidades y botón de pedido por WhatsApp',
       whatsappMessage: 'Hola, me interesa el servicio de Tienda con WhatsApp para mi negocio. ¿Me das más información?'
@@ -94,7 +90,7 @@ const services = [
   <PageHeader title="Servicios" subtitle="Webs simples, rápidas y pensadas para que tus clientes te escriban directo por WhatsApp." />
 
   <!-- ANCHOR NAV -->
-  <nav class="flex flex-wrap justify-center gap-3 mb-12 md:mb-16" aria-label="Navegación de servicios">
+  <nav class="flex flex-wrap justify-center gap-3 mt-section mb-block" aria-label="Navegación de servicios">
     {services.map((svc) => {
       return (
         <a
@@ -109,7 +105,7 @@ const services = [
   </nav>
 
 <!-- Service Rows -->
-<div class="mx-auto flex max-w-[1100px] flex-col gap-24 md:gap-28" id="services-grid" role="list" aria-label="Servicios disponibles">
+<div class="mx-auto flex max-w-[1100px] flex-col gap-10 md:gap-12" id="services-grid" role="list" aria-label="Servicios disponibles">
   {services.map((svc, index) => {
     const isEven = index % 2 === 1;
     return (
@@ -171,26 +167,18 @@ const services = [
 
           <hr class="h-px border-0 bg-[rgba(57,255,20,0.12)]" />
 
-          <div class="grid w-full grid-cols-[1.4fr_1fr] gap-3 max-sm:grid-cols-1">
-            <a
-              href={whatsappUrl(svc.whatsappMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Cotizar ${svc.title} por WhatsApp`}
-              class="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand)] px-6 text-base font-bold text-[#070B0A] transition-all duration-200 hover:brightness-95"
-            >
-              Cotizar este servicio
-              <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6" />
-              </svg>
-            </a>
-            <a
-              href={`${baseUrl}${svc.demoHref}`}
-              class="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-[var(--brand-fg)] px-6 text-base font-bold text-[var(--brand-fg)] transition-all duration-300 hover:bg-[var(--brand)] hover:text-[#070B0A]"
-            >
-              Ver demo
-            </a>
-          </div>
+          <a
+            href={whatsappUrl(svc.whatsappMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Cotizar ${svc.title} por WhatsApp`}
+            class="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[var(--brand)] px-6 text-base font-bold text-[#070B0A] transition-all duration-200 hover:brightness-95"
+          >
+            Cotizar este servicio
+            <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
+          </a>
         </div>
       </div>
     );
@@ -198,7 +186,7 @@ const services = [
 </div>
 
   <!-- CTA FINAL -->
-  <section class="py-20">
+  <section class="pt-section pb-section">
     <div class="text-center max-w-2xl mx-auto">
       <p class="text-base md:text-lg opacity-75 mb-6">¿No sabes cuál necesitas? Escríbeme y te recomiendo en 5 minutos.</p>
       <a

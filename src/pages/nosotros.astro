@@ -1,103 +1,91 @@
 ---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Section from '../components/Section.astro';
-import GlassCard from '../components/GlassCard.astro';
-import ProfilePhoto from '../components/ProfilePhoto.astro';
 import ProcessSection from '../components/ProcessSection.astro';
+import TechCarousel from '../components/TechCarousel.astro';
 import TestimonialsSection from '../components/TestimonialsSection.astro';
 import CtaSection from '../components/CtaSection.astro';
-import { siteConfig } from '../config/site.config';
+import { nosotrosHeader, teamMembers } from '../data/nosotros';
 import { es } from '../i18n/es';
 
-const valueProps = [
-  { title: es.benefits.item1Title, desc: es.benefits.item1Desc, icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />` },
-  { title: es.benefits.item2Title, desc: es.benefits.item2Desc, icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />` },
-  { title: es.benefits.item3Title, desc: es.benefits.item3Desc, icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />` },
-  { title: es.benefits.item4Title, desc: es.benefits.item4Desc, icon: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />` }
-];
+// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const valuesList = [
-  { title: es.aboutPage.val1Title, desc: es.aboutPage.val1Desc },
-  { title: es.aboutPage.val2Title, desc: es.aboutPage.val2Desc },
-  { title: es.aboutPage.val3Title, desc: es.aboutPage.val3Desc }
-];
+// La foto se muestra solo si el archivo existe en /public; si no, iniciales.
+const hasFoto = (foto: string) =>
+  existsSync(path.join(process.cwd(), 'public', foto.replace(/^\/+/, '')));
+
 ---
 
 <Layout title={es.pages.about.title} description={es.pages.about.subtitle}>
-  <PageHeader title={es.aboutPage.headerTitle} subtitle={es.aboutPage.headerSubtitle} />
+  <PageHeader title={nosotrosHeader.title} subtitle={nosotrosHeader.subtitle} />
 
   <Section>
-    <!-- PRESENTACIÓN DE DANIEL -->
-    <div class="max-w-2xl mx-auto mb-20">
-      <GlassCard class="p-8 md:p-12 text-center flex flex-col items-center">
-        <ProfilePhoto class="w-32 h-32 mb-6" />
-        <h2 class="text-3xl font-bold font-['Space_Grotesk'] mb-1">{siteConfig.ownerName}</h2>
-        <div class="text-xs font-mono text-[var(--brand-fg)] font-bold uppercase tracking-wider mb-6">{es.aboutPage.founderRole}</div>
-        <p class="text-sm md:text-base opacity-85 leading-relaxed mb-8">
-          {es.aboutPage.bio}
-        </p>
-
-        <!-- Social links -->
-        <div class="flex items-center gap-4">
-          <a href={siteConfig.socialLinks.facebook} target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl glass-card hover:border-[var(--brand-fg)] transition-all" aria-label="Facebook">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <a href={siteConfig.socialLinks.instagram} target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl glass-card hover:border-[var(--brand-fg)] transition-all" aria-label="Instagram">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </a>
-          <a href={siteConfig.socialLinks.tiktok} target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl glass-card hover:border-[var(--brand-fg)] transition-all" aria-label="TikTok">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg>
-          </a>
-        </div>
-      </GlassCard>
+    <!-- EQUIPO -->
+    <div class="team-grid">
+      {teamMembers.map((member) => {
+        const fotoSrc = member.foto.startsWith('/') ? `${baseUrl}${member.foto}` : member.foto;
+        return (
+          <article class="team-card">
+            {hasFoto(member.foto) ? (
+              <img
+                class="team-avatar"
+                src={fotoSrc}
+                alt={member.nombre}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span class="team-avatar team-avatar--fallback" role="img" aria-label={member.nombre}>
+                {member.iniciales}
+              </span>
+            )}
+            <h2 class="team-name">{member.nombre}</h2>
+            <p class="team-formacion">{member.formacion}</p>
+            <p class="team-rol">{member.rol}</p>
+            <p class="team-desc">{member.descripcion}</p>
+            <ul class="team-chips">
+              {member.chips.map((chip) => (
+                <li class="team-chip">{chip}</li>
+              ))}
+            </ul>
+          </article>
+        );
+      })}
     </div>
 
-    <!-- PROPUESTA DE VALOR -->
-    <div class="mb-20">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 font-['Space_Grotesk']">
-          {es.aboutPage.valuePropTitle}
-        </h2>
-        <p class="text-sm md:text-base opacity-80">{es.aboutPage.valuePropSubtitle}</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-        {valueProps.map(item => (
-          <GlassCard class="flex flex-col items-start text-left">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--brand-soft)] to-[var(--brand-soft)] flex items-center justify-center text-[var(--brand-fg)] mb-4">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" set:html={item.icon}></svg>
-            </div>
-            <h3 class="font-bold text-lg mb-2 font-['Space_Grotesk']">{item.title}</h3>
-            <p class="text-xs sm:text-sm opacity-75 leading-relaxed">{item.desc}</p>
-          </GlassCard>
-        ))}
-      </div>
-    </div>
+    <!-- CARRUSEL DE TECNOLOGÍAS -->
+    <TechCarousel />
 
     <!-- CÓMO TRABAJAMOS -->
-    <div class="mb-20">
+    <div class="mt-block mb-block">
       <ProcessSection />
     </div>
 
     <!-- VALORES -->
-    <div class="mb-20">
-      <div class="text-center max-w-2xl mx-auto mb-12">
+    <div class="mb-block">
+      <div class="text-center max-w-2xl mx-auto mb-head">
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 font-['Space_Grotesk']">
           {es.aboutPage.valuesTitle}
         </h2>
         <p class="text-sm md:text-base opacity-80">{es.aboutPage.valuesSubtitle}</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {valuesList.map((val, i) => (
-          <GlassCard class="p-8 flex flex-col items-start text-left">
-            <div class="text-[var(--brand-fg)] font-mono font-bold text-lg mb-3">0{i + 1}</div>
-            <h3 class="font-bold text-xl mb-2 font-['Space_Grotesk']">{val.title}</h3>
-            <p class="text-sm opacity-75 leading-relaxed">{val.desc}</p>
-          </GlassCard>
+      <ul class="values-list">
+        {es.aboutPage.valuesData.map((val) => (
+          <li class="value-row">
+            <span class="value-num">{val.numero}</span>
+            <h3 class="value-name">{val.nombre}</h3>
+            <div class="value-text">
+              <p class="value-frase">{val.frase}</p>
+              <p class="value-detalle">{val.detalle}</p>
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
 
     <!-- TESTIMONIOS (condicionales) -->
@@ -107,3 +95,207 @@ const valuesList = [
 
   <CtaSection />
 </Layout>
+
+<style>
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-block);
+    max-width: 1000px;
+    margin: 0 auto var(--space-block);
+  }
+
+  @media (min-width: 800px) {
+    .team-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.04), transparent 60%);
+    transition: border-color 250ms ease;
+  }
+
+  .team-card:hover {
+    border-color: color-mix(in srgb, var(--brand) 35%, transparent);
+  }
+
+  .team-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+
+  .team-avatar--fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0e0d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--brand-fg);
+    font-size: 28px;
+    font-weight: 700;
+  }
+
+  .team-name {
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #ffffff;
+  }
+
+  .team-formacion {
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .team-rol {
+    margin: 0 0 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-fg);
+  }
+
+  .team-desc {
+    margin: 0 0 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .team-chips {
+    margin: auto 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .team-chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .values-list {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    max-width: 1000px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .value-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: start;
+    padding: calc(var(--space-block) + 8px) 0;
+  }
+
+  .value-row + .value-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .value-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--brand);
+    transform: scaleY(0);
+    transition: transform 250ms ease;
+  }
+
+  .value-row:hover::before {
+    transform: scaleY(1);
+  }
+
+  .value-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--brand-fg);
+  }
+
+  .value-name {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #ffffff;
+    transition: color 250ms ease;
+  }
+
+  .value-row:hover .value-name {
+    color: var(--brand-fg);
+  }
+
+  .value-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .value-frase {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #ffffff;
+  }
+
+  .value-detalle {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 520px;
+  }
+
+  @media (min-width: 900px) {
+    .value-row {
+      grid-template-columns: 80px 1fr 1.4fr;
+      column-gap: 32px;
+    }
+
+    .value-name {
+      font-size: clamp(36px, 4vw, 40px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .value-row::before {
+      transform: none;
+      opacity: 0;
+    }
+    .value-row:hover::before {
+      opacity: 1;
+    }
+  }
+</style>

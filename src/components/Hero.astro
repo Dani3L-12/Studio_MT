@@ -13,9 +13,6 @@ import restauranteImg from '../assets/Restaurante.webp';
 
 const t = es;
 
-// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
-const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
 
 const projects: Array<{ title: string; category: string; gradient: string; icon: string; image?: typeof gymImg }> = [
@@ -59,10 +56,10 @@ const projects: Array<{ title: string; category: string; gradient: string; icon:
 const marqueeProjects = [...projects, ...projects];
 ---
 
-<section class="relative pt-2 pb-16 md:pt-2 md:pb-28 overflow-hidden text-left">
+<section class="relative pt-2 md:pt-2 pb-0 overflow-hidden text-left">
   
   <!-- Full-Bleed Cover Banner with Fondo3.jpg -->
-  <div class="relative w-full py-20 md:py-32 px-6 md:px-16 mb-20 overflow-hidden text-left">
+  <div class="relative w-full py-20 md:py-32 px-6 md:px-16 mb-block overflow-hidden text-left">
     <!-- Background Image (decorative: full-bleed, soft-edge mask, focal point biased right to keep QR/phone visible on mobile) -->
     <div class="absolute inset-0 -z-20 overflow-hidden soft-mask" aria-hidden="true">
       <Image 
@@ -96,16 +93,13 @@ const marqueeProjects = [...projects, ...projects];
         </h1>
 
         <!-- Subtitle -->
-        <p class="text-base sm:text-lg md:text-xl opacity-95 max-w-xl font-normal leading-relaxed mb-8 text-left text-zinc-100 drop-shadow">
+        <p class="text-base sm:text-lg md:text-xl opacity-95 max-w-xl font-normal leading-relaxed mb-3 text-left text-zinc-100 drop-shadow">
           {t.hero.subtitle}
         </p>
 
-        <!-- Two Buttons -->
+        <!-- CTA -->
         <div class="flex flex-col sm:flex-row items-start gap-4 w-full max-w-md">
-          <Button variant="primary" href={`${baseUrl}/demos`} class="w-full sm:w-auto text-base px-8 py-4 shadow-[0_0_25px_var(--brand-glow)]">
-            {t.hero.ctaDemos}
-          </Button>
-          <Button variant="secondary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4 backdrop-blur-md bg-white/10 text-white border-white/20 hover:bg-white/20">
+          <Button variant="primary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4 shadow-[0_0_25px_var(--brand-glow)]">
             {t.hero.ctaWhatsApp}
           </Button>
         </div>
@@ -118,7 +112,7 @@ const marqueeProjects = [...projects, ...projects];
   <div class="relative w-full max-w-7xl mx-auto px-6 md:px-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
     
 
-      <div class="flex w-max animate-marquee gap-6 py-4">
+      <div class="flex w-max animate-marquee gap-6 py-5">
         {marqueeProjects.map((proj, index) => (
           <div class="shrink-0 w-[280px] sm:w-[320px] h-[420px] sm:h-[460px] rounded-3xl glass-card p-4 border border-[var(--card-dark-border)] shadow-2xl flex flex-col justify-between text-left relative overflow-hidden group hover:border-[var(--brand-fg)] transition-all duration-300">
           {/* Top badge (hidden on photo cards to keep screenshot clean) */}

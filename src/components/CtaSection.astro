@@ -7,31 +7,25 @@ import { es } from '../i18n/es';
 
 const t = es;
 
-// Prefijo del subdirectorio de despliegue ('' en raíz, '/Studio_MT' en GitHub Pages)
-const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(siteConfig.whatsappDefaultMsg)}`;
 ---
 
-<Section class="text-center">
-  <GlassCard class="max-w-4xl mx-auto py-16 px-8 md:px-12 bg-gradient-to-br from-[#053B2A]/40 via-[var(--card-dark-bg)] to-[var(--brand-soft)] border border-[var(--brand-border)] relative overflow-hidden shadow-2xl">
+<Section class="text-center pb-section">
+  <GlassCard class="max-w-4xl mx-auto py-12 px-8 md:px-12 bg-gradient-to-br from-[#053B2A]/40 via-[var(--card-dark-bg)] to-[var(--brand-soft)] border border-[var(--brand-border)] relative overflow-hidden shadow-2xl">
     <!-- Glow accent -->
     <div class="absolute -right-20 -top-20 w-64 h-64 bg-[var(--brand-soft)] rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-[var(--brand-soft)] rounded-full blur-3xl pointer-events-none"></div>
 
     <div class="relative z-10 max-w-2xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-extrabold mb-4 font-['Space_Grotesk'] tracking-tight">
+      <h2 class="text-3xl md:text-5xl font-extrabold mb-3 font-['Space_Grotesk'] tracking-tight">
         {t.ctaSection.title}
       </h2>
-      <p class="text-base md:text-lg opacity-85 mb-8 leading-relaxed">
+      <p class="text-base md:text-lg opacity-85 mb-block leading-relaxed">
         {t.ctaSection.subtitle}
       </p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         <Button variant="primary" href={whatsappUrl} class="w-full sm:w-auto text-base px-8 py-4">
           {t.ctaSection.primaryBtn}
-        </Button>
-        <Button variant="secondary" href={`${baseUrl}/demos`} class="w-full sm:w-auto text-base px-8 py-4">
-          {t.ctaSection.secondaryBtn}
         </Button>
       </div>
     </div>

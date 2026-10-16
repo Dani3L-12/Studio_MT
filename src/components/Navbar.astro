@@ -32,8 +32,6 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
     <nav class="hidden lg:flex items-center gap-6 font-medium text-sm" aria-label="Navegación principal">
       <a href={`${baseUrl}/`} class={`transition-colors hover:text-[var(--brand-fg)] ${isActive('/') ? 'text-[var(--brand-fg)] font-bold border-b-2 border-[var(--brand-fg)] pb-1' : ''}`}>{t.nav.home}</a>
       <a href={`${baseUrl}/servicios`} class={`transition-colors hover:text-[var(--brand-fg)] ${isActive('/servicios') ? 'text-[var(--brand-fg)] font-bold border-b-2 border-[var(--brand-fg)] pb-1' : ''}`}>{t.nav.services}</a>
-      <a href={`${baseUrl}/demos`} class={`transition-colors hover:text-[var(--brand-fg)] ${isActive('/demos') ? 'text-[var(--brand-fg)] font-bold border-b-2 border-[var(--brand-fg)] pb-1' : ''}`}>{t.nav.demos}</a>
-      <a href={`${baseUrl}/paquetes`} class={`transition-colors hover:text-[var(--brand-fg)] ${isActive('/paquetes') ? 'text-[var(--brand-fg)] font-bold border-b-2 border-[var(--brand-fg)] pb-1' : ''}`}>{t.nav.packages}</a>
       <a href={`${baseUrl}/nosotros`} class={`transition-colors hover:text-[var(--brand-fg)] ${isActive('/nosotros') ? 'text-[var(--brand-fg)] font-bold border-b-2 border-[var(--brand-fg)] pb-1' : ''}`}>{t.nav.about}</a>
       <a href={`${baseUrl}/contacto`} class={`transition-colors hover:text-[var(--brand-fg)] ${isActive('/contacto') ? 'text-[var(--brand-fg)] font-bold border-b-2 border-[var(--brand-fg)] pb-1' : ''}`}>{t.nav.contact}</a>
     </nav>
@@ -103,8 +101,6 @@ const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURI
     <nav class="flex flex-col items-center gap-6 text-xl font-bold font-['Space_Grotesk']" aria-label="Navegación móvil">
       <a href={`${baseUrl}/`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.home}</a>
       <a href={`${baseUrl}/servicios`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.services}</a>
-      <a href={`${baseUrl}/demos`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.demos}</a>
-      <a href={`${baseUrl}/paquetes`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.packages}</a>
       <a href={`${baseUrl}/nosotros`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.about}</a>
       <a href={`${baseUrl}/contacto`} class="hover:text-[var(--brand-fg)] transition-colors">{t.nav.contact}</a>
     </nav>
